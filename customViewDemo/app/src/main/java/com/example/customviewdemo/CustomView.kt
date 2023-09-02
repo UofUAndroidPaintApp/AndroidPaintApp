@@ -26,6 +26,10 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         super.onTouchEvent(event)
 
+//        paint.color = Color.RED
+
+
+
         val x = event!!.x.toInt()
         val y = event!!.y.toInt()
 
@@ -49,20 +53,14 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
 
-
-    public fun drawCircle(color: Color){
-        paint.color = Color.WHITE
-        bitmapCanvas.drawRect(0f,0f, bitmap.width.toFloat(), bitmap.height.toFloat(), paint)
-        paint.color = color.toArgb()
-        bitmapCanvas.drawCircle(0.5f*bitmap.width, 0.5f*bitmap.height,
-            0.25f*bitmap.width, paint)
-        Log.d("color", "color is...")
-        invalidate()
-    }
-
     fun setBitMap(bitmap: Bitmap){
         this.bitmap  = bitmap
         this.bitmapCanvas = Canvas(bitmap)
+    }
+
+    fun setColor(color: Int) {
+        this.paint.color = color
+
     }
 
 }
