@@ -17,6 +17,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var bitmapCanvas = Canvas(bitmap)
     private val paint = Paint()
     private val rect: Rect by lazy {Rect(0,0,width, height)}
+    public var offset: Float = 15F
 
     enum class Shape {
         circle,rectangle
@@ -38,18 +39,18 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         when (event!!.action) {
             MotionEvent.ACTION_DOWN -> {
                 if (shape == Shape.circle) {
-                    bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), 10f, paint)
+                    bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), offset, paint)
                 }
                 else {
-                    bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+15, y.toFloat()+15, paint)
+                    bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+ offset , y.toFloat()+ offset, paint)
                 }
             }
             MotionEvent.ACTION_MOVE -> {
                 if (shape == Shape.circle) {
-                    bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), 10f, paint)
+                    bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), offset, paint)
                 }
                 else {
-                    bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+15, y.toFloat()+15, paint)
+                    bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+ offset, y.toFloat()+ offset, paint)
                 }
             }
         }
@@ -58,18 +59,12 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-
     fun setBitMap(bitmap: Bitmap){
         this.bitmap  = bitmap
         this.bitmapCanvas = Canvas(bitmap)
     }
-
     fun setColor(color: Int) {
         this.paint.color = color
-    }
-
-    fun setShape(){
-
     }
 
 }
