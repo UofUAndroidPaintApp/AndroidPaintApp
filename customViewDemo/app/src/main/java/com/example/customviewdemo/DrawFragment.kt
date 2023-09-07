@@ -1,6 +1,7 @@
 package com.example.customviewdemo
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,17 +18,13 @@ class DrawFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-
-
         // Inflate the layout for this fragment
         val binding = FragmentDrawBinding.inflate(inflater)
 
-//         add the unchristened
         val viewModel : SimpleViewModel by activityViewModels()
 
         viewModel.bitmap.observe(viewLifecycleOwner) {
@@ -38,19 +35,27 @@ class DrawFragment : Fragment() {
             //change paint in Custom View to blue
             binding.customView.setColor(-16776961)
             Log.d("blueTest", "inside blue click listener")
-
         }
-
-        //TODO: Purple button listener
+        //Purple button listener
         binding.greenButton.setOnClickListener {
             binding.customView.setColor(-16711936)
         }
-
-        //TODO:  button listener
+        //Green button listener
         binding.redButton.setOnClickListener {
             binding.customView.setColor(-65536)
         }
 
+        //Round pen button listener
+        binding.roundButton.setOnClickListener {
+            //change paint in Custom View to blue
+            binding.customView.setShape(Paint.Cap.ROUND)
+        }
+
+        //Sqaure pen button listener
+        binding.squareButton.setOnClickListener {
+            //change paint in Custom View to blue
+            binding.customView.setShape(Paint.Cap.SQUARE)
+        }
 
         return binding.root
 

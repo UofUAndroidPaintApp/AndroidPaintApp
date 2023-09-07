@@ -12,23 +12,42 @@
 
     <Button
         android:id="@+id/blueButton"
+        android:backgroundTint="#0057D2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="Blue?" />
+        android:text="Blue" />
 
     <Button
         android:id="@+id/greenButton"
+        android:backgroundTint="#97DD40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="Button" />
+        android:text="Green" />
 
     <Button
         android:id="@+id/redButton"
+        android:backgroundTint="#D20A0A"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="red :>" />
+        android:text="Red" />
+
+    <Button
+        android:id="@+id/roundButton"
+        android:backgroundTint="#000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Round Pen Tip" />
+
+    <Button
+        android:id="@+id/squareButton"
+        android:backgroundTint="#000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Square Pen Tip" />
 
 </FrameLayout>

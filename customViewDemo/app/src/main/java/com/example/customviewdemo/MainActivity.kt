@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
 
-
         binding.fragmentContainerView.getFragment<ClickFragment>().setButtonFunction {
             val drawFragment = DrawFragment()
             val transaction = this.supportFragmentManager.beginTransaction()

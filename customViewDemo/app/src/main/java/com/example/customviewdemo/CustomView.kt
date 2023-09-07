@@ -26,10 +26,6 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         super.onTouchEvent(event)
 
-//        paint.color = Color.RED
-
-
-
         val x = event!!.x.toInt()
         val y = event!!.y.toInt()
 
@@ -44,12 +40,8 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         Log.d("circle", "circle has been drawn at $x and $y")
 
-
-
         invalidate()
         return true
-
-//        return super.onTouchEvent(event)
     }
 
 
@@ -60,7 +52,10 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setColor(color: Int) {
         this.paint.color = color
+    }
 
+    fun setShape(shape: Paint.Cap){
+        this.paint.strokeCap = shape
     }
 
 }

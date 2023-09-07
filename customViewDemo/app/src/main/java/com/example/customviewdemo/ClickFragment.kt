@@ -11,7 +11,6 @@ import com.example.customviewdemo.databinding.FragmentClickBinding
 
 class ClickFragment : Fragment() {
 
-
     private var buttonFunction : () -> Unit = {}
 
     fun setButtonFunction(newFunc: () -> Unit) {
