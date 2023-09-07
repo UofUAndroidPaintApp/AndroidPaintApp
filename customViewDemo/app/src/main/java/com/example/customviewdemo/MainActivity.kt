@@ -10,6 +10,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
 
+//        binding.fragmentContainerView.getFragment<SplashFragment>(){
+//            val splashFragment = SplashFragment()
+//            val transaction = this.supportFragmentManager.beginTransaction()
+//            transaction.replace(R.id.fragmentContainerView, splashFragment, "draw_tag")
+//            transaction.commit()
+//        }
+
         binding.fragmentContainerView.getFragment<ClickFragment>().setButtonFunction {
             val drawFragment = DrawFragment()
             val transaction = this.supportFragmentManager.beginTransaction()

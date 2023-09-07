@@ -26,7 +26,7 @@ class ClickFragment : Fragment() {
         val viewModel : SimpleViewModel by activityViewModels()
 
         binding.clickMe.setOnClickListener {
-            viewModel.pickColor()
+            //viewModel.pickColor()
             //call makeBitMap, give width and height from this context
             buttonFunction()
         }

@@ -17,6 +17,12 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var bitmapCanvas = Canvas(bitmap)
     private val paint = Paint()
     private val rect: Rect by lazy {Rect(0,0,width, height)}
+
+    enum class Shape {
+        circle,rectangle
+    }
+
+    var shape = Shape.circle
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawBitmap(bitmap, null, rect, paint)
@@ -31,14 +37,22 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         when (event!!.action) {
             MotionEvent.ACTION_DOWN -> {
-                bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), 10f, paint)
+                if (shape == Shape.circle) {
+                    bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), 10f, paint)
+                }
+                else {
+                    bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+15, y.toFloat()+15, paint)
+                }
             }
             MotionEvent.ACTION_MOVE -> {
-                bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), 10f, paint)
+                if (shape == Shape.circle) {
+                    bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), 10f, paint)
+                }
+                else {
+                    bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+15, y.toFloat()+15, paint)
+                }
             }
         }
-
-        Log.d("circle", "circle has been drawn at $x and $y")
 
         invalidate()
         return true
@@ -54,8 +68,8 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         this.paint.color = color
     }
 
-    fun setShape(shape: Paint.Cap){
-        this.paint.strokeCap = shape
+    fun setShape(){
+
     }
 
 }
