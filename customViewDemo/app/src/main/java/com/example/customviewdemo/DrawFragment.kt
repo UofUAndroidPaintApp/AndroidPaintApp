@@ -47,15 +47,22 @@ class DrawFragment : Fragment() {
 
         //Round pen button listener
         binding.roundButton.setOnClickListener {
-            //binding.customView.setShape(Paint.Cap.ROUND)
             binding.customView.shape = CustomView.Shape.circle
         }
 
         //Sqaure pen button listener
         binding.squareButton.setOnClickListener {
             binding.customView.shape = CustomView.Shape.rectangle
+        }
 
-            //binding.customView.setShape(Paint.Cap.SQUARE)
+        //Pen increase size button listener
+        binding.increaseSizeButton.setOnClickListener {
+            binding.customView.offset += 10F
+        }
+
+        //Pen decrease size button listener
+        binding.decreaseSizeButton.setOnClickListener {
+            binding.customView.offset -= 10F
         }
 
         return binding.root
