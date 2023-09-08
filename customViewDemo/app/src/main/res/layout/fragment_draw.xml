@@ -47,7 +47,25 @@
         android:backgroundTint="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center"
         android:text="Square Pen Tip" />
+
+    <Button
+        android:id="@+id/increaseSizeButton"
+        android:backgroundTint="#1E592F"
+        android:drawablePadding="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="Pen Tip Size +" />
+
+    <Button
+        android:id="@+id/decreaseSizeButton"
+        android:backgroundTint="#DF1278"
+        android:drawablePadding="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:text="Pen Tip Size -" />
 
 </FrameLayout>
