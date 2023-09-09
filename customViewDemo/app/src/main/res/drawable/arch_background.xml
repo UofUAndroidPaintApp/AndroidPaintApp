@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:name="android:windowSplashScreenBackground">
+        <color android:color="@color/white" />
+    </item>
+
+    <item>
+        <!--bitmap represents an image to be drawn-->
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/arch_image" />
+    </item>
+</layer-list>
+
