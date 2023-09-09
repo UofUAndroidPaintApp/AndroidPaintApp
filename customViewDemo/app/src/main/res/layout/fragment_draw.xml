@@ -1,71 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DrawFragment">
+    tools:context=".DrawFragment"
+    android:orientation="horizontal"
+
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true">
 
     <com.example.customviewdemo.CustomView
         android:id="@+id/customView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/blueButton"
-        android:backgroundTint="#0057D2"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Blue" />
+        android:layout_centerHorizontal="true"
 
+        android:backgroundTint="#0057D2"
+        android:text="@string/blue" />
+<!--        android:layout_gravity="right"
+style="?android:attr/buttonBarButtonStyle"
+android:layout_marginTop="20dp"-->
     <Button
         android:id="@+id/greenButton"
-        android:backgroundTint="#97DD40"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:text="Green" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/blueButton"
+        android:backgroundTint="#97DD40"
+        android:text="@string/green" />
+<!--    android:layout_gravity="left"
+        style="?android:attr/buttonBarButtonStyle"-->
     <Button
         android:id="@+id/redButton"
-        android:backgroundTint="#D20A0A"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/greenButton"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Red" />
+        android:backgroundTint="#D20A0A"
+        android:text="@string/red" />
+<!--    android:layout_gravity="center_horizontal"-->
+<!--    style="?android:attr/buttonBarButtonStyle"-->
 
     <Button
         android:id="@+id/roundButton"
-        android:backgroundTint="#000000"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="Round Pen Tip" />
+        android:layout_alignParentLeft="true"
+        android:backgroundTint="#000000"
+        android:text="Round Tip" />
+<!--    android:layout_gravity="center_vertical"-->
+<!--    style="?android:attr/buttonBarButtonStyle"
+android:layout_marginTop="150dp"-->
 
     <Button
         android:id="@+id/squareButton"
-        android:backgroundTint="#000000"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Square Pen Tip" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/roundButton"
+        android:backgroundTint="#000000"
+        android:text="Square Tip" />
+<!--    style="?android:attr/buttonBarButtonStyle"-->
+<!--    android:layout_gravity="center"-->
 
     <Button
         android:id="@+id/increaseSizeButton"
-        android:backgroundTint="#1E592F"
-        android:drawablePadding="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:text="Pen Tip Size +" />
+        android:layout_alignParentRight="true"
+
+        android:backgroundTint="#1E592F"
+        android:drawablePadding="20dp"
+        android:text="@string/pen_tip_size_increase" />
+<!--    android:layout_gravity="bottom|center_horizontal"-->
+<!--    style="?android:attr/buttonBarButtonStyle"-->
 
     <Button
         android:id="@+id/decreaseSizeButton"
-        android:backgroundTint="#DF1278"
-        android:drawablePadding="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:text="Pen Tip Size -" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/increaseSizeButton"
+        android:backgroundTint="#DF1278"
 
-</FrameLayout>
+        android:text="@string/pen_tip_size" />
+<!--    style="?android:attr/buttonBarButtonStyle"
+android:drawablePadding="20dp"-->
+<!--    android:layout_gravity="bottom|left"-->
+
+</RelativeLayout>
