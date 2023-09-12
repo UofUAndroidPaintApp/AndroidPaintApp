@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/arch_background"
-    tools:context=".ClickFragment">
+    tools:context=".ClickFragment"
+    android:id="@+id/clickFragId"
+    >
+
 
     <Button
         android:id="@+id/clickMe"

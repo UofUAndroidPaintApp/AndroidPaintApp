@@ -43,6 +43,10 @@ android {
 
 dependencies {
 
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
+
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
