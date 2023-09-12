@@ -24,7 +24,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     var shape = Shape.circle
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas?.drawBitmap(bitmap, null, rect, paint)
     }

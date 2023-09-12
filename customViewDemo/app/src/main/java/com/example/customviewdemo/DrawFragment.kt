@@ -50,7 +50,7 @@ class DrawFragment : Fragment() {
             binding.customView.shape = CustomView.Shape.circle
         }
 
-        //Sqaure pen button listener
+        //Square pen button listener
         binding.squareButton.setOnClickListener {
             binding.customView.shape = CustomView.Shape.rectangle
         }
