@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.customviewdemo"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.customviewdemo"
@@ -57,4 +57,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     //Fragment stuff
     implementation("androidx.fragment:fragment-ktx:1.6.1")
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.2")
 }

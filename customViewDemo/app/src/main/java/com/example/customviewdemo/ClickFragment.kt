@@ -6,16 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.customviewdemo.databinding.FragmentClickBinding
 
 
 class ClickFragment : Fragment() {
-
-    private var buttonFunction : () -> Unit = {}
-
-    fun setButtonFunction(newFunc: () -> Unit) {
-        buttonFunction = newFunc
-    }
+//    private var buttonFunction : () -> Unit = {}
+//    fun setButtonFunction(newFunc: () -> Unit) {
+//        buttonFunction = newFunc
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +27,8 @@ class ClickFragment : Fragment() {
         binding.clickMe.setOnClickListener {
             //viewModel.pickColor()
             //call makeBitMap, give width and height from this context
-            buttonFunction()
+//            buttonFunction()
+            findNavController().navigate(R.id.action_clickFragment_to_drawFragment)
         }
 
         return binding.root
