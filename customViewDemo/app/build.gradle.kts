@@ -88,4 +88,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.2")
+
+    // for making the splash Image circular
+    implementation ("com.google.android.material:material:1.9.0")
+
 }

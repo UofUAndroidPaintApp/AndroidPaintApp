@@ -15,14 +15,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragmentContainerViewID) as NavHostFragment
         navController = navHostFragment.navController
-
-//        binding.fragmentContainerView.getFragment<ClickFragment>().setButtonFunction {
-//            val drawFragment = DrawFragment()
-//            val transaction = this.supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.fragmentContainerView, drawFragment, "draw_tag")
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-//        }
         setContentView(binding.root)
     }
 }

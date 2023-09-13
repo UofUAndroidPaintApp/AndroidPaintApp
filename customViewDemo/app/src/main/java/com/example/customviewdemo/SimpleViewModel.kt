@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
 class SimpleViewModel :ViewModel() {
-
     //Model
     private val _bitmap: MutableLiveData<Bitmap> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
     val bitmap = _bitmap as LiveData<Bitmap>

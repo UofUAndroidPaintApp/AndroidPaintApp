@@ -79,15 +79,6 @@ class ExampleInstrumentedTest {
         onView(withId(R.id.clickFragId)).check(matches(isDisplayed()))
     }
 
-    @Test
-    fun testTest() {
-
-
-
-
-    }
-
-    //test does initialization work
 
 
 }

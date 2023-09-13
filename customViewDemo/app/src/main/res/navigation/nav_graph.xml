@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/clickFragment">
+    app:startDestination="@id/splashFragmentRealOne">
 
     <fragment
         android:id="@+id/clickFragment"
@@ -21,8 +21,15 @@
         tools:layout="@layout/fragment_draw" >
         <action
             android:id="@+id/action_drawFragment_to_clickFragment"
-            app:destination="@id/clickFragment"
-            app:popUpTo="@id/clickFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/clickFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragmentRealOne"
+        android:name="com.example.customviewdemo.SplashFragment"
+        android:label="fragment_splash_real_one"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragmentRealOne_to_clickFragment"
+            app:destination="@id/clickFragment" />
     </fragment>
 </navigation>

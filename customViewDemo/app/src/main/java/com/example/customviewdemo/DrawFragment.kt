@@ -24,7 +24,6 @@ class DrawFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val binding = FragmentDrawBinding.inflate(inflater)
-
         val viewModel : SimpleViewModel by activityViewModels()
 
         viewModel.bitmap.observe(viewLifecycleOwner) {
@@ -57,12 +56,19 @@ class DrawFragment : Fragment() {
 
         //Pen increase size button listener
         binding.increaseSizeButton.setOnClickListener {
+
             binding.customView.offset += 10F
         }
 
         //Pen decrease size button listener
         binding.decreaseSizeButton.setOnClickListener {
-            binding.customView.offset -= 10F
+            if (binding.customView.offset < 15F){
+                binding.customView.offset = 15F
+            }
+            else{
+                binding.customView.offset -= 10F
+            }
+
         }
 
         return binding.root
