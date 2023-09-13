@@ -17,4 +17,3 @@ class SplashScreenActivity : AppCompatActivity() {
         }, 1000L)
     }
 }
-

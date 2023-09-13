@@ -15,4 +15,11 @@ class SimpleViewModel :ViewModel() {
     private val _bitmap: MutableLiveData<Bitmap> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
     val bitmap = _bitmap as LiveData<Bitmap>
 
+    private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
+    val penColor = _penColor as LiveData<Color>
+
+    fun pickColor() {
+        _penColor.value = Color.valueOf(2F, 2F, 0F)
+    }
+
 }

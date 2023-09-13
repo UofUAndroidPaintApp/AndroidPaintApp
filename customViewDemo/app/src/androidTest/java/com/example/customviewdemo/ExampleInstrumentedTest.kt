@@ -1,5 +1,6 @@
 package com.example.customviewdemo
 
+import androidx.lifecycle.testing.TestLifecycleOwner
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
@@ -11,6 +12,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.hamcrest.CoreMatchers.allOf
 
 import org.junit.Test
@@ -27,15 +31,27 @@ import org.junit.Rule
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
 
-
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.customviewdemo", appContext.packageName)
+
+        val vm = SimpleViewModel()
+        runBlocking{
+            val lifeCycleOwner = TestLifecycleOwner()
+            val before = vm.penColor.value!!
+            var callBackFired = false
+
+            lifeCycleOwner.run{
+                withContext(Dispatchers.Main){
+                    vm.penColor.observe(lifeCycleOwner){
+                }
+                    callBackFired = true
+                }
+            }
+            assertTrue(callBackFired)
+        }
     }
     @Test
     fun testTextViewString() {
@@ -62,5 +78,16 @@ class ExampleInstrumentedTest {
         pressBack()
         onView(withId(R.id.clickFragId)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun testTest() {
+
+
+
+
+    }
+
+    //test does initialization work
+
 
 }
