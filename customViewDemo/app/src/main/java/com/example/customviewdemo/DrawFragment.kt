@@ -62,7 +62,13 @@ class DrawFragment : Fragment() {
 
         //Pen decrease size button listener
         binding.decreaseSizeButton.setOnClickListener {
-            binding.customView.offset -= 10F
+            if (binding.customView.offset < 15F){
+                binding.customView.offset = 15F
+            }
+            else{
+                binding.customView.offset -= 10F
+            }
+
         }
 
         return binding.root
