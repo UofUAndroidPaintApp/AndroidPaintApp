@@ -3,7 +3,6 @@
     <item android:name="android:windowSplashScreenBackground">
         <color android:color="@color/white" />
     </item>
-
     <item>
         <!--bitmap represents an image to be drawn-->
         <bitmap

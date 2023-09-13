@@ -26,8 +26,6 @@ import org.junit.Rule
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-
-
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
