@@ -7,13 +7,13 @@ import android.os.Handler
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)  // Set the content view to the splash screen layout
-        Handler().postDelayed({
-            // launch the main activity
-            startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
-            finish()
-        }, 1000L)
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_splash)  // Set the content view to the splash screen layout
+//        Handler().postDelayed({
+//            // launch the main activity
+//            startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+//            finish()
+//        }, 1000L)
+//    }
 }
