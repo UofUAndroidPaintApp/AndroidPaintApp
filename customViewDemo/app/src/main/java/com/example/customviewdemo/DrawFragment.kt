@@ -13,9 +13,11 @@ import androidx.fragment.app.activityViewModels
 import com.example.customviewdemo.databinding.FragmentClickBinding
 import com.example.customviewdemo.databinding.FragmentDrawBinding
 
-
+//The DrawFragment contains all the pen buttons for shape, size and color. Each button has a listener
+//attached to it which updates values in the onTouchEvent() method in the view.
 class DrawFragment : Fragment() {
 
+    //The onCreateView() method stores all the pen button listeners.
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,13 +56,13 @@ class DrawFragment : Fragment() {
             binding.customView.shape = CustomView.Shape.rectangle
         }
 
-        //Pen increase size button listener
+        //Increase pen size button listener
         binding.increaseSizeButton.setOnClickListener {
 
             binding.customView.offset += 10F
         }
 
-        //Pen decrease size button listener
+        //Decrease pen size button listener
         binding.decreaseSizeButton.setOnClickListener {
             if (binding.customView.offset < 15F){
                 binding.customView.offset = 15F
@@ -68,9 +70,7 @@ class DrawFragment : Fragment() {
             else{
                 binding.customView.offset -= 10F
             }
-
         }
-
         return binding.root
 
     }

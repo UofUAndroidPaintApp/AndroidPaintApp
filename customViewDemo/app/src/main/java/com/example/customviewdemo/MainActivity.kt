@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.customviewdemo.databinding.ActivityMainBinding
 
+//The MainActivity runs at the launch of the drawing app and initiates navigation throughout the app.
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {

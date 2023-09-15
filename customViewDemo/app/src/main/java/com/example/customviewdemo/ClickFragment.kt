@@ -10,8 +10,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.customviewdemo.databinding.FragmentClickBinding
 
 
+//The ClickFragment stores the click me button on the welcome screen which maps to the draw fragment
+//via a click listener and navigation control.
 class ClickFragment : Fragment() {
 
+    //The onCreateView() method manages the navigation from the ClickFragment welcome screen to the
+    //DrwawFragment where the actually painting takes place.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,14 +25,9 @@ class ClickFragment : Fragment() {
         val viewModel : SimpleViewModel by activityViewModels()
 
         binding.clickMe.setOnClickListener {
-            //viewModel.pickColor()
-            //call makeBitMap, give width and height from this context
-//            buttonFunction()
             findNavController().navigate(R.id.action_clickFragment_to_drawFragment)
         }
-
         return binding.root
     }
-
 
 }
