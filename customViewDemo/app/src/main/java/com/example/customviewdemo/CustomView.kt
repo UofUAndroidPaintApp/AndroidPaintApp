@@ -18,21 +18,22 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paint = Paint()
     private val rect: Rect by lazy {Rect(0,0,width, height)}
     public var offset: Float = 15F
-
+    //Enum for the paint tool pen tip shapes
     enum class Shape {
         circle,rectangle
     }
-
     var shape = Shape.circle
+
+    //The onDraw() method creates a canvas that can be painted on
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas?.drawBitmap(bitmap, null, rect, paint)
     }
 
+    //The onTouchEvent() method manages the actually "painting" via mouse movements on the canvas
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         super.onTouchEvent(event)
-
         val x = event!!.x.toInt()
         val y = event!!.y.toInt()
 

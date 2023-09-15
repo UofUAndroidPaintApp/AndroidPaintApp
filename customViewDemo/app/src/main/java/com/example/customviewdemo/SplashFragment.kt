@@ -9,7 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 
+//The SplashFragment stores the splash image, manages how long the splash image is displayed as well
+//as transitions to the ClickFragment via navigation control
 class SplashFragment : Fragment() {
+    //The onCreateView() method manages the navigation from the SplashFragment screen to the
+    //ClickFragment welcome screen.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
