@@ -7,6 +7,17 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.fragment.findNavController
 
 //The SplashFragment stores the splash image, manages how long the splash image is displayed as well
@@ -18,10 +29,43 @@ class SplashFragment : androidx.fragment.app.Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_splash, container, false)
-        Handler(Looper.myLooper()!!).postDelayed({
-            findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
-        }, 1500L)
-        return view
+
+        //From Gloria
+        return ComposeView(requireContext()).apply {
+            setContent {
+                MaterialTheme {
+                    splashCompose()
+                }
+
+                Handler(Looper.myLooper()!!).postDelayed({
+                    findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
+                }, 1500L)
+            }
+        }
+
+
+//        val view =  inflater.inflate(R.layout.fragment_splash, container, false)
+//        Handler(Looper.myLooper()!!).postDelayed({
+//            findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
+//        }, 1500L)
+//        return view
+    }
+}
+
+//From Gloria
+@Composable
+fun splashCompose() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.go_team),
+            contentDescription = "The image of the team",
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
