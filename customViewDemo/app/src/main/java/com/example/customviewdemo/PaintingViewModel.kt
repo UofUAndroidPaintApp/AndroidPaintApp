@@ -11,12 +11,14 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
 
     val allPaintings: LiveData<List<PaintingData>> = repository.allPaintings
 
-    fun checkPaintings(painting: Bitmap){
-        repository.checkPaintings(painting)
-    }
-    fun addData(painting: PaintingResult) {
+//    fun checkPaintings(painting: Bitmap){
+//        repository.checkPaintings(painting)
+//    }
+    fun saveImage(bitmap: Bitmap, filename: String) {
+    //designed for ease of view author, so take string and bitmap^^^
+    //repository actually stores it, builds an entity object that goes into the database and calls a dao method
         viewModelScope.launch{
-            repository.checkPaintings(painting.value)
+//            repository.addPainting(bitmap, filename)
         }
     }
 

@@ -37,18 +37,9 @@ class SplashFragment : androidx.fragment.app.Fragment() {
                     splashCompose()
                 }
 
-                Handler(Looper.myLooper()!!).postDelayed({
-                    findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
-                }, 1500L)
+
             }
         }
-
-
-//        val view =  inflater.inflate(R.layout.fragment_splash, container, false)
-//        Handler(Looper.myLooper()!!).postDelayed({
-//            findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
-//        }, 1500L)
-//        return view
     }
 }
 

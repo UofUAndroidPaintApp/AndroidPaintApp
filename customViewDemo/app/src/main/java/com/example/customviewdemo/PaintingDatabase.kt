@@ -59,3 +59,15 @@ interface PaintingDAO {
 
 }
 
+//@Dao
+//interface ImageDAO {
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun addImageData(data: ImageData)
+//
+//    @Update
+//    suspend fun updateImageData(data: ImageData)
+//
+//    @Query("SELECT * from images ORDER BY timestamp DESC")
+//    fun allImages() : Flow<List<ImageData>>
+//}
+
