@@ -21,8 +21,8 @@ class PaintingRepository (val scope: CoroutineScope, val dao: PaintingDAO) {
     fun checkPaintings(painting: Bitmap){
         scope.launch {
             delay(1000) // pretend this is a slow network call
-            dao.addPaintingData(
-                PaintingData(Date(), filename = ""))
+//            dao.addPaintingData(
+//                PaintingData(Date(), filename = ""))
         }
     }
 }

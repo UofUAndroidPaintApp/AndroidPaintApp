@@ -24,8 +24,11 @@ class ClickFragment : Fragment() {
         val binding = FragmentClickBinding.inflate(inflater, container, false)
         val viewModel : SimpleViewModel by activityViewModels()
 
-        binding.clickMe.setOnClickListener {
+        binding.startPainting.setOnClickListener {
             findNavController().navigate(R.id.action_clickFragment_to_drawFragment)
+        }
+        binding.savedPaintings.setOnClickListener {
+            findNavController().navigate(R.id.action_clickFragment_to_savePaintingFragment)
         }
         return binding.root
     }
