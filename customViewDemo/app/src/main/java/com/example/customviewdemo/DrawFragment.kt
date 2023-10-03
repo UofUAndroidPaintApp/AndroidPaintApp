@@ -71,6 +71,12 @@ class DrawFragment : Fragment() {
                 binding.customView.offset -= 10F
             }
         }
+
+        //Save painting button listener
+        binding.savePaintingButton.setOnClickListener {
+            //Call a method that saves current painting
+        }
+
         return binding.root
 
     }

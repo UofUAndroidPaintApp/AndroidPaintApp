@@ -11,4 +11,8 @@
     <string name="square_pen_tip">Square Pen Tip</string>
     <string name="round_pen_tip">Round Pen Tip</string>
     <string name="pen_tip_size_increase">Pen Tip Size +</string>
+    <string name="start_painting">Start Painting</string>
+    <string name="saved_paintings">Saved Paintings</string>
+    <string name="let_s_paint">Let\'s Paint!</string>
+    <string name="save">Save</string>
 </resources>
