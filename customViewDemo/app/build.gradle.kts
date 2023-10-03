@@ -123,6 +123,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.1")
 //    ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-common:2.5.2")
+    kapt("androidx.room:room-common:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
 
     testImplementation("junit:junit:4.13.2")

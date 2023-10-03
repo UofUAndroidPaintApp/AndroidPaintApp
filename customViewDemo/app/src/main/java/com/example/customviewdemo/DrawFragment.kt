@@ -1,21 +1,22 @@
 package com.example.customviewdemo
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.customviewdemo.databinding.FragmentClickBinding
 import com.example.customviewdemo.databinding.FragmentDrawBinding
+import java.util.Date
 
 //The DrawFragment contains all the pen buttons for shape, size and color. Each button has a listener
 //attached to it which updates values in the onTouchEvent() method in the view.
 class DrawFragment : Fragment() {
+
+    val vm: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
+
 
     //The onCreateView() method stores all the pen button listeners.
     @SuppressLint("ClickableViewAccessibility")
@@ -74,7 +75,10 @@ class DrawFragment : Fragment() {
 
         //Save painting button listener
         binding.savePaintingButton.setOnClickListener {
+//            var paintData: PaintingData = PaintingData(Date(), filename = Date().toString() + ".png", )
             //Call a method that saves current painting
+
+//            vm.saveImage()
         }
 
         return binding.root

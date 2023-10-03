@@ -1,6 +1,7 @@
 package com.example.customviewdemo
 
 import android.graphics.Bitmap
+import androidx.lifecycle.LiveData
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
@@ -20,8 +21,10 @@ class Converters {
 
 //Defines a SQLITE table, basically
 @Entity(tableName="paintings")
-data class PaintingData(var timestamp: Date,
-                    var filename: String,
+data class PaintingData(
+    var timestamp: Date,
+    var filename: String,
+    var bitmap: ByteArray
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0 // integer primary key for the DB
