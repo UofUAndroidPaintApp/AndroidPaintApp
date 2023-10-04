@@ -1,6 +1,8 @@
 package com.example.customviewdemo
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +11,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.customviewdemo.databinding.FragmentDrawBinding
-import java.util.Date
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.util.UUID
 
 //The DrawFragment contains all the pen buttons for shape, size and color. Each button has a listener
 //attached to it which updates values in the onTouchEvent() method in the view.
@@ -75,11 +81,32 @@ class DrawFragment : Fragment() {
 
         //Save painting button listener
         binding.savePaintingButton.setOnClickListener {
+
+            val pName = if (viewModel.paintingName.isBlank())
+            {
+                UUID.randomUUID().toString()
+            }
+            else
+            {
+                viewModel.paintingName
+            }
+
             Log.d("DrawFragment", "inside save button")
 //            var paintData: PaintingData = PaintingData(Date(), filename = Date().toString() + ".png", )
             //Call a method that saves current painting
 
-            viewModel.saveImage()
+            val stream = ByteArrayOutputStream()
+            viewModel.bitmap.value?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            context?.openFileOutput(pName, Context.MODE_PRIVATE).use {
+                it?.write(stream.toByteArray())
+            }
+
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    stream.close()
+                }
+            }
+            viewModel.saveImage(pName)
             Log.d("DrawFragment", "after saveImage")
 
         }

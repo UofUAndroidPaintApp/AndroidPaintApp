@@ -1,15 +1,10 @@
 package com.example.customviewdemo
 
-import android.R.attr
 import android.content.Context
-import android.graphics.Bitmap
-import androidx.datastore.core.DataStore
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.util.prefs.Preferences
+import java.util.Date
 
 
 //The "Repository" is basically the "in-memory" part of the model
@@ -17,7 +12,14 @@ class PaintingRepository(val scope: CoroutineScope, val dao: PaintingDAO, contex
 
     //    val currentPainting = dao.latestPainting().asLiveData()
 //    val allPaintings = dao.allPaintings().asLiveData()
-    suspend fun addPainting(bitmap: Bitmap) {
+    suspend fun addPainting(fileName: String) {
+        scope.launch{
+            dao.addPaintingData(PaintingData(Date(), fileName))
+        }
+
+        Log.d("PaintingRepository", "in addPainting")
+
+
 
     }
 }

@@ -51,9 +51,6 @@ interface PaintingDAO {
     @Insert
     suspend fun addPaintingData(data: PaintingData)
 
-    @Query("SELECT * from paintings ORDER BY timestamp DESC LIMIT 1")
-    fun latestPainting() : Flow<PaintingData>
-
     @Query("SELECT * from paintings ORDER BY timestamp DESC")
     fun allPaintings() : Flow<List<PaintingData>>
 
