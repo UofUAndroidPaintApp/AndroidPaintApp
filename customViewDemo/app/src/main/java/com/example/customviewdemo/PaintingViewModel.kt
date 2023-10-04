@@ -1,6 +1,5 @@
 package com.example.customviewdemo
 
-import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
@@ -16,6 +15,7 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
     val bitmap = _bitmap as LiveData<Bitmap>
     private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
     val penColor = _penColor as LiveData<Color>
+    val paintingName = ""
 
 //    val currentPainting: LiveData<PaintingData> = repository.currentPainting
 //
@@ -24,13 +24,13 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
 //    fun checkPaintings(painting: Bitmap){
 //        repository.checkPaintings(painting)
 //    }
-    fun saveImage() {
+    fun saveImage(pName: String) {
 
     Log.d("saveImage", "inside save image")
     //designed for ease of view author, so take string and bitmap^^^
     //repository actually stores it, builds an entity object that goes into the database and calls a dao method
         viewModelScope.launch{
-            bitmap.value?.let {repository.addPainting(it)}
+            repository.addPainting(pName)
             Log.d("saveImage", "after somethign?")
         }
     }

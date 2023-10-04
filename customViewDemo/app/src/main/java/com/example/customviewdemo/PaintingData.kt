@@ -24,7 +24,6 @@ class Converters {
 data class PaintingData(
     var timestamp: Date,
     var filename: String,
-    var bitmap: ByteArray
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0 // integer primary key for the DB
