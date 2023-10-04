@@ -1,24 +1,37 @@
 package com.example.customviewdemo
 
+import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 class PaintingViewModel (private val repository: PaintingRepository) : ViewModel() {
-    val currentPainting: LiveData<PaintingData> = repository.currentPainting
 
-    val allPaintings: LiveData<List<PaintingData>> = repository.allPaintings
+    private val _bitmap: MutableLiveData<Bitmap> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
+    val bitmap = _bitmap as LiveData<Bitmap>
+    private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
+    val penColor = _penColor as LiveData<Color>
+
+//    val currentPainting: LiveData<PaintingData> = repository.currentPainting
+//
+//    val allPaintings: LiveData<List<PaintingData>> = repository.allPaintings
 
 //    fun checkPaintings(painting: Bitmap){
 //        repository.checkPaintings(painting)
 //    }
-    fun saveImage(bitmap: Bitmap, filename: String) {
+    fun saveImage() {
+
+    Log.d("saveImage", "inside save image")
     //designed for ease of view author, so take string and bitmap^^^
     //repository actually stores it, builds an entity object that goes into the database and calls a dao method
         viewModelScope.launch{
-//            repository.addPainting(bitmap, filename)
+            bitmap.value?.let {repository.addPainting(it)}
+            Log.d("saveImage", "after somethign?")
         }
     }
 

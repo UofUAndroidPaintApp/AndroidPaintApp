@@ -49,20 +49,10 @@ class SavePaintingFragment : Fragment() {
                 }
             }
         }
-
     }
 
     @Composable
     fun SavePaintingCompose() {
-
-        //sqlite query to get all paintings from the database
-        var paintingsList =  vm.allPaintings.observeAsState()
-
-//        paintingsList
-
-
-
-
 
         val list = (1..10).map { it.toString() }
         LazyVerticalGrid(
