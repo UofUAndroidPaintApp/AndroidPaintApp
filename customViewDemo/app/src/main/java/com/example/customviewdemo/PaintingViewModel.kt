@@ -16,6 +16,7 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
     private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
     val penColor = _penColor as LiveData<Color>
     val paintingName = ""
+    val allPics: LiveData<List<PaintingData>> = repository.allPics
 
 //    val currentPainting: LiveData<PaintingData> = repository.currentPainting
 //

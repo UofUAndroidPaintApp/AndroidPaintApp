@@ -39,5 +39,9 @@
         android:id="@+id/savePaintingFragment"
         android:name="com.example.customviewdemo.SavePaintingFragment"
         android:label="fragment_save_painting"
-        tools:layout="@layout/fragment_save_painting" />
+        tools:layout="@layout/fragment_save_painting" >
+        <action
+            android:id="@+id/action_savePaintingFragment_to_drawFragment"
+            app:destination="@id/drawFragment" />
+    </fragment>
 </navigation>
