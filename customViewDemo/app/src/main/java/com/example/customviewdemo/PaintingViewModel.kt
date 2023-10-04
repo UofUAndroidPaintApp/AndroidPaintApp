@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class PaintingViewModel (private val repository: PaintingRepository) : ViewModel() {
 
     private val _bitmap: MutableLiveData<Bitmap> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
-    val bitmap = _bitmap as LiveData<Bitmap>
+    var bitmap = _bitmap as LiveData<Bitmap>
     private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
     val penColor = _penColor as LiveData<Color>
     val paintingName = ""
@@ -34,6 +34,11 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
             repository.addPainting(pName)
             Log.d("saveImage", "after somethign?")
         }
+    }
+
+    fun updateBitmap(bitmap: Bitmap) {
+        Log.d("updateBitmap", "inside update bitmap")
+        _bitmap.value = bitmap
     }
 
 }

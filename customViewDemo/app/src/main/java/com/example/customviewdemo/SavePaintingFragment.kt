@@ -1,15 +1,12 @@
 package com.example.customviewdemo
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -37,12 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.createNavigateOnClickListener
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.customviewdemo.databinding.FragmentClickBinding
 import java.io.File
 
 class SavePaintingFragment : Fragment() {
@@ -65,6 +57,7 @@ class SavePaintingFragment : Fragment() {
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun SavePaintingCompose(vm: PaintingViewModel, context: Context) {
+
         val allPics by vm.allPics.observeAsState()
         val list = allPics ?: listOf()
         LazyVerticalGrid(
@@ -84,6 +77,8 @@ class SavePaintingFragment : Fragment() {
                     val file = File(context?.filesDir, list[index].filename).readBytes()
                     val bitmap = BitmapFactory.decodeByteArray(file, 0, file.size)
 
+                    val bmp_Copy: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
                     val imageBitmap = bitmap.asImageBitmap()
                     val cardmodifier = Modifier
                         .padding(4.dp)
@@ -92,11 +87,14 @@ class SavePaintingFragment : Fragment() {
                         .clickable {
                             //This is where we'd add listener to open saved painting
                             //findNavController().navigate(R.id.action_savePaintingFragment_to_drawFragment)
-
                         }
+
                     Card(
-                        onClick = { navigateToDrawFragment(list[index].filename) },
-                        backgroundColor = Color.Red,
+                        onClick = {
+                            navigateToDrawFragment(list[index].filename, bmp_Copy)
+                            Log.d("filename", list[index].filename)
+                        },
+                        backgroundColor = Color.LightGray,
                         modifier = Modifier
                             .padding(4.dp)
                             .fillMaxWidth(),
@@ -111,7 +109,7 @@ class SavePaintingFragment : Fragment() {
                                     .fillMaxWidth()
                             )
                             Text(
-                                text = list[index].timestamp.toString(),
+                                text = list[index].filename,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 30.sp,
                                 color = Color(0xFFFFFFFF),
@@ -125,14 +123,18 @@ class SavePaintingFragment : Fragment() {
         )
     }
 
-    fun navigateToDrawFragment(filename: String) {
+
+
+    fun navigateToDrawFragment(filename: String, bitmap: Bitmap) {
         Log.e("Button", "mu button thing works")
         val drawFragment = DrawFragment()
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerViewID, drawFragment, "load_tag")
         transaction.addToBackStack(null)
-        transaction.commit()
 
+        vm.updateBitmap(bitmap)
+
+        transaction.commit()
     }
 
 

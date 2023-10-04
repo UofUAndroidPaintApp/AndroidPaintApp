@@ -37,12 +37,6 @@ abstract class PaintingDatabase : RoomDatabase() {
             }
         }
     }
-
-
-
-
-
-
 }
 
 @Dao
