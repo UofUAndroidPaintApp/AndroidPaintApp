@@ -22,7 +22,7 @@ class ClickFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         val binding = FragmentClickBinding.inflate(inflater, container, false)
-        val viewModel : SimpleViewModel by activityViewModels()
+//        val viewModel : SimpleViewModel by activityViewModels()
 
         binding.startPainting.setOnClickListener {
             findNavController().navigate(R.id.action_clickFragment_to_drawFragment)

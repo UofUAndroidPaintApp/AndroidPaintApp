@@ -15,7 +15,7 @@ import java.util.Date
 //attached to it which updates values in the onTouchEvent() method in the view.
 class DrawFragment : Fragment() {
 
-    val vm: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
+    val viewModel: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
 
 
     //The onCreateView() method stores all the pen button listeners.
@@ -27,7 +27,7 @@ class DrawFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val binding = FragmentDrawBinding.inflate(inflater)
-        val viewModel : SimpleViewModel by activityViewModels()
+//        val viewModel : SimpleViewModel by activityViewModels()
 
         viewModel.bitmap.observe(viewLifecycleOwner) {
             binding.customView.setBitMap(it)
@@ -75,10 +75,13 @@ class DrawFragment : Fragment() {
 
         //Save painting button listener
         binding.savePaintingButton.setOnClickListener {
+            Log.d("DrawFragment", "inside save button")
 //            var paintData: PaintingData = PaintingData(Date(), filename = Date().toString() + ".png", )
             //Call a method that saves current painting
 
-//            vm.saveImage()
+            viewModel.saveImage()
+            Log.d("DrawFragment", "after saveImage")
+
         }
 
         return binding.root
