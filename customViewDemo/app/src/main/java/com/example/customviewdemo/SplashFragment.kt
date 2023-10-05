@@ -36,9 +36,10 @@ class SplashFragment : androidx.fragment.app.Fragment() {
                 MaterialTheme {
                     splashCompose()
                 }
-
-
             }
+            Handler(Looper.myLooper()!!).postDelayed({
+                findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
+            }, 1500L)
         }
     }
 }
