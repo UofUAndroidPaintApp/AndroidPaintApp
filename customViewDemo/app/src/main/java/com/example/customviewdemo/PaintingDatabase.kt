@@ -48,6 +48,9 @@ interface PaintingDAO {
     @Query("SELECT * from paintings ORDER BY timestamp DESC")
     fun allPaintings() : Flow<List<PaintingData>>
 
+    @Query("SELECT * from paintings ORDER BY timestamp DESC LIMIT 1")
+    fun latestPainting() : Flow<PaintingData>
+
 }
 
 //@Dao

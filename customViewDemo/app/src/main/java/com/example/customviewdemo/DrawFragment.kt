@@ -71,24 +71,22 @@ class DrawFragment : Fragment() {
 
         //Decrease pen size button listener
         binding.decreaseSizeButton.setOnClickListener {
-            if (binding.customView.offset < 15F){
+            if (binding.customView.offset < 15F) {
                 binding.customView.offset = 15F
-            }
-            else{
+            } else {
                 binding.customView.offset -= 10F
             }
         }
 
         //Save painting button listener
         binding.savePaintingButton.setOnClickListener {
-
-            val pName = if (viewModel.paintingName.isBlank())
-            {
-                UUID.randomUUID().toString()
-            }
-            else
-            {
-                viewModel.paintingName
+            var isInDatabase = false
+            var pName = ""
+            if (viewModel.paintingName.isBlank()) {
+                pName = UUID.randomUUID().toString()
+            } else {
+                pName = viewModel.paintingName
+                isInDatabase = true
             }
 
             Log.d("DrawFragment", "inside save button")
@@ -106,7 +104,9 @@ class DrawFragment : Fragment() {
                     stream.close()
                 }
             }
-            viewModel.saveImage(pName)
+            if (!isInDatabase) {
+                viewModel.saveImage(pName)
+            }
             Log.d("DrawFragment", "after saveImage")
 
         }
