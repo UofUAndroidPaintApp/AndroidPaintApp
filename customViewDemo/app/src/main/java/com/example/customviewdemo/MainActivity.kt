@@ -32,4 +32,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-data class PaintingResult(var value: Bitmap)
+

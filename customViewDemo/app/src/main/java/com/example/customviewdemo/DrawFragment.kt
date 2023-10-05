@@ -33,7 +33,6 @@ class DrawFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val binding = FragmentDrawBinding.inflate(inflater)
-//        val viewModel : SimpleViewModel by activityViewModels()
 
         viewModel.bitmap.observe(viewLifecycleOwner) {
             binding.customView.setBitMap(it)
@@ -82,17 +81,16 @@ class DrawFragment : Fragment() {
         binding.savePaintingButton.setOnClickListener {
             var isInDatabase = false
             var pName = ""
-            if (viewModel.paintingName.isBlank()) {
+            if (viewModel.paintingName.value == "") {
                 pName = UUID.randomUUID().toString()
             } else {
-                pName = viewModel.paintingName
+                pName = viewModel.paintingName.value.toString()
                 isInDatabase = true
             }
 
             Log.d("DrawFragment", "inside save button")
-//            var paintData: PaintingData = PaintingData(Date(), filename = Date().toString() + ".png", )
-            //Call a method that saves current painting
 
+            //Call a method that saves current painting
             val stream = ByteArrayOutputStream()
             viewModel.bitmap.value?.compress(Bitmap.CompressFormat.PNG, 100, stream)
             context?.openFileOutput(pName, Context.MODE_PRIVATE).use {
