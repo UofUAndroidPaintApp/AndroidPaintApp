@@ -15,16 +15,10 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
     var bitmap = _bitmap as LiveData<Bitmap>
     private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
     val penColor = _penColor as LiveData<Color>
-    val paintingName = ""
     val allPics: LiveData<List<PaintingData>> = repository.allPics
+    var _paintingName  : MutableLiveData<String> = MutableLiveData("")
+    val paintingName = _paintingName as LiveData<String>
 
-//    val currentPainting: LiveData<PaintingData> = repository.currentPainting
-//
-//    val allPaintings: LiveData<List<PaintingData>> = repository.allPaintings
-
-//    fun checkPaintings(painting: Bitmap){
-//        repository.checkPaintings(painting)
-//    }
     fun saveImage(pName: String) {
 
     Log.d("saveImage", "inside save image")
@@ -36,9 +30,10 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
         }
     }
 
-    fun updateBitmap(bitmap: Bitmap) {
+    fun loadPainting(bitmap: Bitmap, filename: String) {
         Log.d("updateBitmap", "inside update bitmap")
         _bitmap.value = bitmap
+        _paintingName.value = filename
     }
 
 }

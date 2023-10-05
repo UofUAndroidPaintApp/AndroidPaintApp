@@ -11,9 +11,6 @@ import kotlin.random.Random
 
 //The SimpleViewModel
 class SimpleViewModel : ViewModel() {
-
-    //The model for the paint app for phase 1 is so simple, it's contained within the viewmodel
-
     //The MutableLiveData objects are the objects actually being updated during painting while the
     //LiveData objects are observed in the DrawFragment.
     private val _bitmap: MutableLiveData<Bitmap> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))

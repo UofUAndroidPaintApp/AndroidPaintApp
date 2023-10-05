@@ -15,14 +15,13 @@ import com.example.customviewdemo.databinding.FragmentClickBinding
 class ClickFragment : Fragment() {
 
     //The onCreateView() method manages the navigation from the ClickFragment welcome screen to the
-    //DrwawFragment where the actually painting takes place.
+    //DrawFragment where the actually painting takes place.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         val binding = FragmentClickBinding.inflate(inflater, container, false)
-//        val viewModel : SimpleViewModel by activityViewModels()
 
         binding.startPainting.setOnClickListener {
             findNavController().navigate(R.id.action_clickFragment_to_drawFragment)

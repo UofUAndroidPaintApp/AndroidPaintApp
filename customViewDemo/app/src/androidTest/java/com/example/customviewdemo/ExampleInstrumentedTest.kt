@@ -158,12 +158,4 @@ class ExampleInstrumentedTest {
             }
         }
     }
-
-
-
-
-
-
-
-
 }

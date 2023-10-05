@@ -17,11 +17,7 @@ class PaintingRepository(val scope: CoroutineScope, val dao: PaintingDAO, contex
         scope.launch{
             dao.addPaintingData(PaintingData(Date(), fileName))
         }
-
         Log.d("PaintingRepository", "in addPainting")
-
-
-
     }
 }
 

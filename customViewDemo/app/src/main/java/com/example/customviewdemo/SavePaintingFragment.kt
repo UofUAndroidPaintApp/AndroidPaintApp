@@ -109,12 +109,12 @@ class SavePaintingFragment : Fragment() {
                                     .fillMaxWidth()
                             )
                             Text(
-                                text = list[index].filename,
+                                text = list[index].timestamp.toString(),
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 30.sp,
-                                color = Color(0xFFFFFFFF),
+                                fontSize = 12.sp,
+                                color = Color(0xFF000000),
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(16.dp)
+                                modifier = Modifier.padding(8.dp)
                             )
                         }
                     }
@@ -123,21 +123,15 @@ class SavePaintingFragment : Fragment() {
         )
     }
 
-
-
     fun navigateToDrawFragment(filename: String, bitmap: Bitmap) {
         Log.e("Button", "mu button thing works")
         val drawFragment = DrawFragment()
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerViewID, drawFragment, "load_tag")
         transaction.addToBackStack(null)
-
-        vm.updateBitmap(bitmap)
-
+        vm.loadPainting(bitmap, filename)
         transaction.commit()
     }
-
-
 }
 
 
