@@ -24,6 +24,8 @@ class ClickFragment : Fragment() {
         val binding = FragmentClickBinding.inflate(inflater, container, false)
 
         binding.startPainting.setOnClickListener {
+            val viewModel: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
+            viewModel.clearBitmap()
             findNavController().navigate(R.id.action_clickFragment_to_drawFragment)
         }
         binding.savedPaintings.setOnClickListener {

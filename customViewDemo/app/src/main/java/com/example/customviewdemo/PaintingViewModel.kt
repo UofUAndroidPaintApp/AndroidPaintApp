@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 class PaintingViewModel (private val repository: PaintingRepository) : ViewModel() {
 
-    private val _bitmap: MutableLiveData<Bitmap> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
+    private val _bitmap: MutableLiveData<Bitmap??> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
     var bitmap = _bitmap as LiveData<Bitmap>
     private val _penColor: MutableLiveData<Color> = MutableLiveData(Color.valueOf(1f, 1f, 0f))
     val penColor = _penColor as LiveData<Color>
@@ -34,6 +34,12 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
         Log.d("updateBitmap", "inside update bitmap")
         _bitmap.value = bitmap
         _paintingName.value = filename
+    }
+
+
+    public fun clearBitmap() {
+        _paintingName.value = ""
+        _bitmap.value?.eraseColor(Color.TRANSPARENT)
     }
 
 }
