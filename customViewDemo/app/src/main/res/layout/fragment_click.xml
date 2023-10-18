@@ -27,7 +27,7 @@
         android:id="@+id/textView"
         android:layout_width="275dp"
         android:layout_height="79dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="55dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/let_s_paint"
         android:textColor="@color/orange"

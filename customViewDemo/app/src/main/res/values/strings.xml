@@ -15,4 +15,8 @@
     <string name="saved_paintings">Saved Paintings</string>
     <string name="let_s_paint">Let\'s Paint!</string>
     <string name="save">Save</string>
+    <string name="round_tip">Round Tip</string>
+    <string name="square_tip">Square Tip</string>
+    <string name="tip_size_increase">tip_size_increase</string>
+    <string name="pen_tipsize">Pen Tip Size-</string>
 </resources>

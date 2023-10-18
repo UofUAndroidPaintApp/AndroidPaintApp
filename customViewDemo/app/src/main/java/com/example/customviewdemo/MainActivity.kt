@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.customviewdemo.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,14 +23,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val vm: PaintingViewModel by viewModels { PaintingViewModelFactory((application as PaintingApplication).paintingRepository) }
+        //val vm: PaintingViewModel by viewModels { PaintingViewModelFactory((application as PaintingApplication).paintingRepository) }
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragmentContainerViewID) as NavHostFragment
         navController = navHostFragment.navController
-        setContentView(binding.root)
+        setupActionBarWithNavController(navController)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
+
+
+
 
 
