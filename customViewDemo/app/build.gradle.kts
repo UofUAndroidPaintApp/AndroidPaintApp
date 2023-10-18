@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -188,11 +189,5 @@ dependencies {
     implementation("androidx.room:room-common:2.6.0-rc01")
     implementation("androidx.room:room-ktx:2.6.0-rc01")
     ksp("androidx.room:room-compiler:2.6.0-rc01")
-
-
-
-
-
-
 
 }
