@@ -108,7 +108,6 @@ class DrawFragment : Fragment() {
             Log.d("DrawFragment", "after saveImage")
 
         }
-
         return binding.root
 
     }

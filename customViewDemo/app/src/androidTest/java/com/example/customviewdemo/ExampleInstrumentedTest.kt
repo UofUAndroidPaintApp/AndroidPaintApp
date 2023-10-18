@@ -83,7 +83,7 @@ class ExampleInstrumentedTest {
         }
     }
 
-//    @Test
+    //    @Test
 //    fun splashIsDisplayed() {
 //        onView(withId(R.id.splashFragId)).check(matches(isDisplayed()))
 //    }
@@ -135,8 +135,7 @@ class ExampleInstrumentedTest {
 
         suspend fun insertFilename(nameToInsert: String): Boolean {
 
-            val data: PaintingData = PaintingData(Date(), nameToInsert+".jpg")
-
+            val data: PaintingData = PaintingData(Date(), nameToInsert + ".jpg")
             //put data in database
             runBlocking {
                 db.paintingDao().addPaintingData(data)
@@ -146,12 +145,11 @@ class ExampleInstrumentedTest {
             val query = db.paintingDao().latestPainting()
             var firstQuery = query.first()
 
-
             return firstQuery == data
         }
 
         @Test
-        fun testDatabaseInsertion(){
+        fun testDatabaseInsertion() {
             runBlocking {
                 assert(insertFilename("lilBunk"))
                 assert(insertFilename("winkledinkle"))
