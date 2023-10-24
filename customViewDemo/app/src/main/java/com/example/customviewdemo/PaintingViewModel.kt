@@ -39,7 +39,7 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
 
     public fun clearBitmap() {
         _paintingName.value = ""
-        _bitmap.value?.eraseColor(Color.TRANSPARENT)
+        _bitmap.value?.eraseColor(Color.WHITE)
     }
 
 }

@@ -1,7 +1,10 @@
 package com.example.customviewdemo
+
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,9 +37,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import java.io.File
+
 
 class SavePaintingFragment : Fragment() {
 
@@ -75,6 +86,10 @@ class SavePaintingFragment : Fragment() {
             content = {
                 items(list.size) { index ->
                     val file = File(context?.filesDir, list[index].filename).readBytes()
+
+
+
+
                     val bitmap = BitmapFactory.decodeByteArray(file, 0, file.size)
 
                     val bmp_Copy: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
@@ -116,6 +131,44 @@ class SavePaintingFragment : Fragment() {
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(8.dp)
                             )
+                            OutlinedButton(onClick = {
+
+                                //get bitmap
+
+                                //convert bitmap to a file
+                                saveImage(bitmap, list[index].filename+".png")
+//                                Log.i("savePainting", "bitmap has been saved")
+//
+//                                //get that file
+//                                try{
+//                                    val file = File(context.filesDir, list[index].filename+".png").readBytes()
+//
+//                                } catch (e: Exception) {
+//                                    Log.i("savePaintingError", "File does not exist. ${e.printStackTrace()}")
+//                                }
+//
+//                                Log.i("savePainting", "png has been received")
+//
+//                                val testfile = File(list[index].filename+".png")
+//                                testfile.writeBytes(file)
+//
+//
+//
+//                                val uri = FileProvider.getUriForFile(
+//                                    context, "${context.packageName}.provider",
+//                                    testfile
+//                                )
+
+//                                sharePhoto(uri, context)
+
+
+                                val filepath:String = context.filesDir.toString() + "/" + list[index].filename+".png"
+                                startFileShareIntent(filepath)
+
+
+                                 }) {
+                                Text("Share")
+                            }
                         }
                     }
                 }
@@ -131,6 +184,40 @@ class SavePaintingFragment : Fragment() {
         transaction.addToBackStack(null)
         vm.loadPainting(bitmap, filename)
         transaction.commit()
+    }
+
+    fun saveImage(bitmap: Bitmap, fileName: String) {
+        lifecycleScope.launch {
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+            context?.openFileOutput(fileName, Context.MODE_PRIVATE).use {
+                it?.write(bos.toByteArray())
+            }
+            withContext(Dispatchers.IO) {
+                bos.close()
+            }
+        }
+    }
+
+    fun startFileShareIntent(filePath: String) { // pass the file path where the actual file is located.
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "*/*"  // "*/*" will accepts all types of files, if you want specific then change it on your need.
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            putExtra(
+                Intent.EXTRA_SUBJECT,
+                "Sharing file from the AppName"
+            )
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Sharing file from the AppName with some description"
+            )
+            val fileURI = FileProvider.getUriForFile(
+                requireContext(), requireContext().packageName + ".provider",
+                File(filePath)
+            )
+            putExtra(Intent.EXTRA_STREAM, fileURI)
+        }
+        startActivity(shareIntent)
     }
 }
 
