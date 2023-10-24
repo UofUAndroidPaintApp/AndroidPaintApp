@@ -41,7 +41,6 @@ abstract class PaintingDatabase : RoomDatabase() {
 
 @Dao
 interface PaintingDAO {
-
     @Insert
     suspend fun addPaintingData(data: PaintingData)
 
@@ -51,6 +50,9 @@ interface PaintingDAO {
     @Query("SELECT * from paintings ORDER BY timestamp DESC LIMIT 1")
     fun latestPainting() : Flow<PaintingData>
 
+    // Gloria added this query to remove the painting from the database based on the filename
+    @Query("DELETE FROM paintings WHERE filename = :filename")
+    suspend fun removePainting(filename: String)
 }
 
 
