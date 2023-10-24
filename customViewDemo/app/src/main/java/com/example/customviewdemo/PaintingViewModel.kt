@@ -42,6 +42,12 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
         _bitmap.value?.eraseColor(Color.WHITE)
     }
 
+    fun removePainting(filename: String) {
+        viewModelScope.launch {
+            repository.removePainting(filename)
+        }
+    }
+
 }
 
 // This factory class allows us to define custom constructors for the view model

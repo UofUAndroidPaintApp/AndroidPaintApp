@@ -46,6 +46,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                     bitmapCanvas.drawRect(x.toFloat(), y.toFloat(), x.toFloat()+ offset , y.toFloat()+ offset, paint)
                 }
             }
+
             MotionEvent.ACTION_MOVE -> {
                 if (shape == Shape.circle) {
                     bitmapCanvas.drawCircle(x.toFloat(), y.toFloat(), offset, paint)

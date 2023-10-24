@@ -10,18 +10,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material3.Text
@@ -32,7 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -69,12 +80,14 @@ class SavePaintingFragment : Fragment() {
     @Composable
     fun SavePaintingCompose(vm: PaintingViewModel, context: Context) {
 
+        val editIcon = painterResource(id = R.drawable.ic_launcher_edit)
+        val deleteIcon: Painter = painterResource(id = R.drawable.ic_launcher_delete_icon)
+
         val allPics by vm.allPics.observeAsState()
         val list = allPics ?: listOf()
+
         LazyVerticalGrid(
-
             columns = GridCells.Adaptive(128.dp),
-
             // content padding
             contentPadding = PaddingValues(
                 start = 12.dp,
@@ -82,7 +95,6 @@ class SavePaintingFragment : Fragment() {
                 end = 12.dp,
                 bottom = 16.dp
             ),
-
             content = {
                 items(list.size) { index ->
                     val file = File(context?.filesDir, list[index].filename).readBytes()
@@ -91,9 +103,7 @@ class SavePaintingFragment : Fragment() {
 
 
                     val bitmap = BitmapFactory.decodeByteArray(file, 0, file.size)
-
                     val bmp_Copy: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-
                     val imageBitmap = bitmap.asImageBitmap()
                     val cardmodifier = Modifier
                         .padding(4.dp)
@@ -106,7 +116,7 @@ class SavePaintingFragment : Fragment() {
 
                     Card(
                         onClick = {
-                            navigateToDrawFragment(list[index].filename, bmp_Copy)
+                           // navigateToDrawFragment(list[index].filename, bmp_Copy)
                             Log.d("filename", list[index].filename)
                         },
                         backgroundColor = Color.LightGray,
@@ -120,17 +130,18 @@ class SavePaintingFragment : Fragment() {
                                 bitmap = imageBitmap,
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .size(200.dp)
+                                    .size(150.dp)
                                     .fillMaxWidth()
                             )
                             Text(
                                 text = list[index].timestamp.toString(),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp,
-                                color = Color(0xFF000000),
+                                color = Color.Black,
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(8.dp)
+                                modifier = Modifier.padding(5.dp)
                             )
+//<<<<<<< HEAD
                             OutlinedButton(onClick = {
 
                                 //get bitmap
@@ -169,6 +180,42 @@ class SavePaintingFragment : Fragment() {
                                  }) {
                                 Text("Share")
                             }
+//=======
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                            ) {
+
+                                IconButton(
+                                    onClick = {
+                                        navigateToDrawFragment(list[index].filename, bmp_Copy)
+                                    },
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    Icon(
+                                        painter = editIcon,
+                                        contentDescription = "Edit Icon"
+                                    )
+                                }
+
+                                IconButton(
+                                    onClick = {
+                                        vm.removePainting(list[index].filename)
+                                    },
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    Icon(
+                                        painter = deleteIcon,
+                                        contentDescription = "Delete Icon"
+                                    )
+                                }
+
+                            }
+
+//>>>>>>> b1a89ecbdc3fa95d9d245dea050f75c624bce3e4
                         }
                     }
                 }
