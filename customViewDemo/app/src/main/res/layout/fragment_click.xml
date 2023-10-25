@@ -9,20 +9,6 @@
     android:id="@+id/clickFragId"
     >
 
-
-    <Button
-        android:id="@+id/startPainting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="104dp"
-        android:backgroundTint="@color/orange"
-        android:text="@string/start_painting"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="275dp"
@@ -39,15 +25,37 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/startPainting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="104dp"
+        android:backgroundTint="@color/orange"
+        android:text="@string/start_painting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/savedPaintings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="104dp"
         android:backgroundTint="@color/orange"
-
         android:text="Saved Paintings"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/gravityPainting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/orange"
+        android:text="Gravity Painting"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.915"
         app:layout_constraintStart_toStartOf="parent" />
 

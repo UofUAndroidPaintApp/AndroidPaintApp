@@ -31,6 +31,10 @@ class ClickFragment : Fragment() {
         binding.savedPaintings.setOnClickListener {
             findNavController().navigate(R.id.action_clickFragment_to_savePaintingFragment)
         }
+        binding.gravityPainting.setOnClickListener {
+            findNavController().navigate(R.id.action_clickFragment_to_sensorFragment)
+        }
+
         return binding.root
     }
 

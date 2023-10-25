@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_clickFragment_to_savePaintingFragment"
             app:destination="@id/savePaintingFragment" />
+        <action
+            android:id="@+id/action_clickFragment_to_sensorFragment"
+            app:destination="@id/sensorFragment" />
     </fragment>
     <fragment
         android:id="@+id/drawFragment"
@@ -43,5 +46,14 @@
         <action
             android:id="@+id/action_savePaintingFragment_to_drawFragment"
             app:destination="@id/drawFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sensorFragment"
+        android:name="com.example.customviewdemo.SensorFragment"
+        android:label="fragment_sensor"
+        tools:layout="@layout/fragment_sensor" >
+        <action
+            android:id="@+id/action_sensorFragment_to_clickFragment"
+            app:destination="@id/clickFragment" />
     </fragment>
 </navigation>
