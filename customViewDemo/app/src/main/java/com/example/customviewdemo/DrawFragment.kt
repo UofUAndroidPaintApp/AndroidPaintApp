@@ -8,8 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
 import com.example.customviewdemo.databinding.FragmentDrawBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -23,6 +29,9 @@ class DrawFragment : Fragment() {
 
     val viewModel: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
 
+    //Phase 3 - This x and y will be used to store collected gravity values sensor is collecting
+    private var x = mutableFloatStateOf(0.0f)
+    private var y = mutableFloatStateOf(0.0f)
 
     //The onCreateView() method stores all the pen button listeners.
     @SuppressLint("ClickableViewAccessibility")
@@ -34,6 +43,8 @@ class DrawFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentDrawBinding.inflate(inflater)
 
+        //May need to add one line here
+
         viewModel.bitmap.observe(viewLifecycleOwner) {
             binding.customView.setBitMap(it)
         }
@@ -43,11 +54,11 @@ class DrawFragment : Fragment() {
             binding.customView.setColor(-16776961)
             Log.d("blueTest", "inside blue click listener")
         }
-        //Purple button listener
+        //Green button listener
         binding.greenButton.setOnClickListener {
             binding.customView.setColor(-16711936)
         }
-        //Green button listener
+        //Red button listener
         binding.redButton.setOnClickListener {
             binding.customView.setColor(-65536)
         }
@@ -64,7 +75,6 @@ class DrawFragment : Fragment() {
 
         //Increase pen size button listener
         binding.increaseSizeButton.setOnClickListener {
-
             binding.customView.offset += 10F
         }
 
@@ -108,7 +118,39 @@ class DrawFragment : Fragment() {
             Log.d("DrawFragment", "after saveImage")
 
         }
-        return binding.root
 
+        //Phase 3 - Marble sensor mode click listener
+        binding.gravityModeButton.setOnClickListener {
+            Log.d("DrawFragement", "About to call initialize sensor.")
+            binding.customView.initializeSensor()
+            binding.customView.getGravData().asLiveData().observe(viewLifecycleOwner){
+
+                if (it[0] > 0) {
+                    x.floatValue -= 5
+
+                }
+                if (it[0] < 0) {
+                    x.floatValue += 5
+                }
+
+                if (it[1] > 0) {
+                    y.floatValue += 5
+                }
+                if (it[1] < 0) {
+                    y.floatValue -= 5
+                }
+                if (y.floatValue < 0)
+                    y.floatValue = 0f
+                if (x.floatValue < 0)
+                    x.floatValue = 0f
+                if (y.floatValue > 2670)
+                    y.floatValue = 2670f
+                if (x.floatValue > 1374)
+                    x.floatValue = 1374f
+
+                binding.customView.moveMarble(x.floatValue, y.floatValue)
+            }
+        }
+        return binding.root
     }
 }

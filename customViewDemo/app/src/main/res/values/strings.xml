@@ -19,4 +19,6 @@
     <string name="square_tip">Square Tip</string>
     <string name="tip_size_increase">tip_size_increase</string>
     <string name="pen_tipsize">Pen Tip Size-</string>
+    <string name="marble_mode">Marble Mode</string>
+    <string name="gravity_mode">Gravity Mode</string>
 </resources>

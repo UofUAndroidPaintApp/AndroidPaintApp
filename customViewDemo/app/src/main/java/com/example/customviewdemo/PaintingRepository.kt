@@ -20,7 +20,6 @@ class PaintingRepository(val scope: CoroutineScope, val dao: PaintingDAO, contex
         Log.d("PaintingRepository", "in addPainting")
     }
 
-
     // Gloria: added this method to remove the paint
     suspend fun removePainting(filename: String) {
         dao.removePainting(filename)
