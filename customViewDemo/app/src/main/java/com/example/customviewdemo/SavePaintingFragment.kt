@@ -98,10 +98,6 @@ class SavePaintingFragment : Fragment() {
             content = {
                 items(list.size) { index ->
                     val file = File(context?.filesDir, list[index].filename).readBytes()
-
-
-
-
                     val bitmap = BitmapFactory.decodeByteArray(file, 0, file.size)
                     val bmp_Copy: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
                     val imageBitmap = bitmap.asImageBitmap()
@@ -141,36 +137,13 @@ class SavePaintingFragment : Fragment() {
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(5.dp)
                             )
-//<<<<<<< HEAD
+
                             OutlinedButton(onClick = {
 
                                 //get bitmap
 
                                 //convert bitmap to a file
                                 saveImage(bitmap, list[index].filename+".png")
-//                                Log.i("savePainting", "bitmap has been saved")
-//
-//                                //get that file
-//                                try{
-//                                    val file = File(context.filesDir, list[index].filename+".png").readBytes()
-//
-//                                } catch (e: Exception) {
-//                                    Log.i("savePaintingError", "File does not exist. ${e.printStackTrace()}")
-//                                }
-//
-//                                Log.i("savePainting", "png has been received")
-//
-//                                val testfile = File(list[index].filename+".png")
-//                                testfile.writeBytes(file)
-//
-//
-//
-//                                val uri = FileProvider.getUriForFile(
-//                                    context, "${context.packageName}.provider",
-//                                    testfile
-//                                )
-
-//                                sharePhoto(uri, context)
 
 
                                 val filepath:String = context.filesDir.toString() + "/" + list[index].filename+".png"
@@ -180,7 +153,6 @@ class SavePaintingFragment : Fragment() {
                                  }) {
                                 Text("Share")
                             }
-//=======
 
                             Row(
                                 modifier = Modifier
@@ -214,8 +186,6 @@ class SavePaintingFragment : Fragment() {
                                 }
 
                             }
-
-//>>>>>>> b1a89ecbdc3fa95d9d245dea050f75c624bce3e4
                         }
                     }
                 }

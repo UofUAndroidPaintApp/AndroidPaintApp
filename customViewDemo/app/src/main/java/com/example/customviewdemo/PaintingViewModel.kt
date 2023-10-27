@@ -47,7 +47,6 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
             repository.removePainting(filename)
         }
     }
-
 }
 
 // This factory class allows us to define custom constructors for the view model

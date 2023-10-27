@@ -22,12 +22,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //val vm: PaintingViewModel by viewModels { PaintingViewModelFactory((application as PaintingApplication).paintingRepository) }
-
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Phase 2, part 2 - action bar
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val navHostFragment = supportFragmentManager
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
 
     }
-
+    //Phase 2, part 2 - action bar
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }

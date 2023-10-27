@@ -20,7 +20,8 @@ class ClickFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment - this is kind of like a constructor, "binding" repplaces
+        // the findViewById method, it generates an xml layout for each binding class.
         val binding = FragmentClickBinding.inflate(inflater, container, false)
 
         binding.startPainting.setOnClickListener {
