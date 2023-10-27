@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158545115277",
+    "project_id": "paintingapplication-e4da4",
+    "storage_bucket": "paintingapplication-e4da4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158545115277:android:444bb0bcf2d961cca20ac4",
+        "android_client_info": {
+          "package_name": "com.example.customviewdemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpRWCyBSGAEMY30uEd2F7R0DAILWsb1YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
