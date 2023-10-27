@@ -32,8 +32,9 @@
         android:label="fragment_splash_real_one"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragmentRealOne_to_clickFragment"
-            app:destination="@id/clickFragment" />
+            android:id="@+id/splashToLogin"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/savePaintingFragment"
@@ -43,5 +44,15 @@
         <action
             android:id="@+id/action_savePaintingFragment_to_drawFragment"
             app:destination="@id/drawFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.customviewdemo.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/loginToClick"
+            app:destination="@id/clickFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
     </fragment>
 </navigation>

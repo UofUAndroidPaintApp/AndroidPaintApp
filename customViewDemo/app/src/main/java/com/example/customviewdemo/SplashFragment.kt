@@ -38,7 +38,7 @@ class SplashFragment : androidx.fragment.app.Fragment() {
                 }
             }
             Handler(Looper.myLooper()!!).postDelayed({
-                findNavController().navigate(R.id.action_splashFragmentRealOne_to_clickFragment)
+                findNavController().navigate(R.id.loginFragment)
             }, 1500L)
         }
     }

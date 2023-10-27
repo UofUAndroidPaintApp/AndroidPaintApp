@@ -4,6 +4,8 @@ plugins {
     id("kotlin-kapt")
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -60,6 +62,7 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-runtime-testing:2.6.2")
     implementation("androidx.datastore:datastore-core:1.0.0")
+    implementation("androidx.annotation:annotation:1.6.0")
     val lifecycle_version = "2.6.2"
     val arch_version = "2.2.0"
 
@@ -189,5 +192,10 @@ dependencies {
     implementation("androidx.room:room-common:2.6.0-rc01")
     implementation("androidx.room:room-ktx:2.6.0-rc01")
     ksp("androidx.room:room-compiler:2.6.0-rc01")
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
 }

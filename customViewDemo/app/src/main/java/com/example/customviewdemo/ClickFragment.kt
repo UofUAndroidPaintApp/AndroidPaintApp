@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.customviewdemo.databinding.FragmentClickBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 //The ClickFragment stores the click me button on the welcome screen which maps to the draw fragment
@@ -31,6 +33,11 @@ class ClickFragment : Fragment() {
         }
         binding.savedPaintings.setOnClickListener {
             findNavController().navigate(R.id.action_clickFragment_to_savePaintingFragment)
+        }
+        binding.signOutButtonId.setOnClickListener {
+            Firebase.auth.signOut()
+            findNavController().navigate(R.id.loginFragment)
+
         }
         return binding.root
     }
