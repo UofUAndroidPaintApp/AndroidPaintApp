@@ -22,8 +22,5 @@ Accept: application/json
 ### Delete image created by the user
 DELETE http://127.0.0.1:8080/paint/delete?paintId=3
 
-
-
-
-
-
+###
+GET  http://127.0.0.1:8080/paint/test.png/getImage

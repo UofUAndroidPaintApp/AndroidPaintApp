@@ -1,18 +1,17 @@
 package com.example.customviewdemo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,50 +34,49 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.customviewdemo.network.ServerApplication
-import com.example.customviewdemo.network.ServerRepository
 import com.example.customviewdemo.network.ServerViewModel
 import com.example.customviewdemo.network.ServerViewModelFactory
+import com.google.gson.Gson
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.onDownload
+import io.ktor.client.plugins.onUpload
+import io.ktor.client.request.forms.MultiPartFormDataContent
+import io.ktor.client.request.forms.formData
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
-import com.example.customviewdemo.network.ServerService
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.onUpload
-import io.ktor.client.request.get
-import io.ktor.client.request.post
-import io.ktor.client.statement.bodyAsText
-import io.ktor.client.request.*
-import io.ktor.client.request.forms.MultiPartFormDataContent
-import io.ktor.client.request.forms.formData
-import io.ktor.client.statement.*
-import io.ktor.http.*
 
-
-class SavePaintingFragment : Fragment() {
+class SaveToKtorFragment : Fragment() {
 
     val vm: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
 
@@ -98,18 +96,52 @@ class SavePaintingFragment : Fragment() {
         }
     }
 
+    @SuppressLint("CoroutineCreationDuringComposition")
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun SavePaintingCompose(vm: PaintingViewModel, context: Context) {
+
+
 
         val editIcon = painterResource(id = R.drawable.ic_launcher_edit)
         val deleteIcon: Painter = painterResource(id = R.drawable.ic_launcher_delete_icon)
 
         val allPics by vm.allPics.observeAsState()
         val list = allPics ?: listOf()
+        val client = HttpClient()
+
+        var pics by remember {mutableStateOf<Array<receivedData>?>(null)}
 
 
-        // Ktor stuffss
+        //todo change runblocking to the other thing
+        runBlocking {
+            val httpResponse: String = client.get("http://10.0.2.2:8080/paint").bodyAsText()
+            val gson = Gson()
+            val drawingDataList = gson.fromJson(httpResponse, Array<receivedData>::class.java)
+//            Log.i("saveToKTor", gson.toJson(drawingDataList[0]))
+//            Log.i("saveToKtor", "size is..." + drawingDataList.size.toString())
+
+            pics = drawingDataList
+
+
+
+//            for (thing in drawingDataList) {
+//                Log.i("savetoKtorThing", "thing is..."+thing.imagePath)
+//
+//            }
+
+
+//            for (gson.toJson(drawingDataList.size))
+
+        }
+
+        for (thing in pics!!){
+            lifecycleScope.launch {
+                val bitmap = client.get("http://10.0.2.2:8080/paint/" + thing.imagePath + "/getImage")
+            }
+
+            Log.i("savetoKtorThing", "thing is..."+thing.imagePath)
+        }
 
 
         LazyVerticalGrid(
@@ -217,14 +249,14 @@ class SavePaintingFragment : Fragment() {
                                         val response: HttpResponse = client.post("http://10.0.2.2:8080/paint/create") {
                                             setBody(
                                                 MultiPartFormDataContent(
-                                                formData {
-                                                    append("image", File(filepath).readBytes(), Headers.build {
-                                                        append(HttpHeaders.ContentType, "image/png")
-                                                        append(HttpHeaders.ContentDisposition, "filename=" + list[index].filename+".png")
-                                                    })
-                                                },
-                                                boundary = "WebAppBoundary"
-                                            )
+                                                    formData {
+                                                        append("image", File(filepath).readBytes(), Headers.build {
+                                                            append(HttpHeaders.ContentType, "image/png")
+                                                            append(HttpHeaders.ContentDisposition, "filename=" + list[index].filename+".png")
+                                                        })
+                                                    },
+                                                    boundary = "WebAppBoundary"
+                                                )
                                             )
                                             onUpload { bytesSentTotal, contentLength ->
                                                 println("Sent $bytesSentTotal bytes from $contentLength")
@@ -234,7 +266,7 @@ class SavePaintingFragment : Fragment() {
                                     Log.i("serverPost", "we're AFTER?? the posting maybe it worked")
 
 
-                                     }) {
+                                }) {
                                     Text(text = "Share to Server")
 
                                 }
@@ -304,7 +336,3 @@ class SavePaintingFragment : Fragment() {
         startActivity(shareIntent)
     }
 }
-
-
-
-
