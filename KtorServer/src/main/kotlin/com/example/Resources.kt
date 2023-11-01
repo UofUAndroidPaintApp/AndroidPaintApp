@@ -97,7 +97,7 @@ fun Application.configureResources() {
 
         // DELETE a paint by id
         delete<Paints.Delete>() {
-            val paintId = it.id
+            val paintId = it.paintId
             val deletedRow = newSuspendedTransaction(Dispatchers.IO) {
                 PaintTable.deleteWhere { PaintTable.id eq paintId }
             }
@@ -134,7 +134,7 @@ class Paints {
     class UserID(var parent: Paints = Paints(), val userID: String)
 
     @Resource("delete")
-    class Delete(val parent: Paints = Paints(), val id: Int)
+    class Delete(val parent: Paints = Paints(), val paintId: Int)
 }
 
 

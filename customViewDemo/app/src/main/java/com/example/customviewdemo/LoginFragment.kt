@@ -46,14 +46,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return ComposeView(requireContext()).apply {
-
             setContent {
                 PhoneAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -108,7 +105,6 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                             }
-
                         } else {
                             findNavController().navigate(R.id.clickFragment)
 //                            Text("Welcome ${user!!.email} with id: ${user!!.uid}")

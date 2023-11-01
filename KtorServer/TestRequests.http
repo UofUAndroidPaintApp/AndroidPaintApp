@@ -6,7 +6,7 @@ POST  http://127.0.0.1:8080/paint/create
 Content-Type: application/json
 
 {
-  "userID" : "10",
+  "userID" : "11",
   "imagePath" : "file:/Users/gloriadukuzeyesu/Downloads/cat.jpeg",
   "title" : "Cute cat"
 }
@@ -17,6 +17,10 @@ GET http://127.0.0.1:8080/paint/paintId?paintId=1
 ### Get images created by this user
 GET http://127.0.0.1:8080/paint/userId?userID=10
 Accept: application/json
+
+
+### Delete image created by the user
+DELETE http://127.0.0.1:8080/paint/delete?paintId=3
 
 
 

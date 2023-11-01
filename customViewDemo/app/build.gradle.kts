@@ -188,7 +188,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     //room
-
     implementation("androidx.room:room-common:2.6.0-rc01")
     implementation("androidx.room:room-ktx:2.6.0-rc01")
     ksp("androidx.room:room-compiler:2.6.0-rc01")
@@ -197,5 +196,14 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // Ktor
+    implementation("io.ktor:ktor-client-cio:2.3.5")
+    implementation("io.ktor:ktor-client-resources:2.3.5")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
+    implementation("io.ktor:ktor-client-android:2.3.5")
+    implementation("androidx.core:core-ktx:1.12.0")
+
 
 }

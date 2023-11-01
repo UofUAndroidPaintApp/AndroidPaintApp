@@ -51,17 +51,34 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.customviewdemo.network.ServerRepository
+import com.example.customviewdemo.network.ServerViewModel
+import com.example.customviewdemo.network.ServerViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
+import com.example.customviewdemo.network.ServerService
+
 
 
 class SavePaintingFragment : Fragment() {
 
     val vm: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
+
+    // TODO declare a serverViewModel and work on sending  images to the server
+/*
+
+    private val serverRepository: ServerRepository = ServerRepository(coroutineScope, ServerService)
+
+    private val serverViewModel: ServerViewModel by lazy {
+        ViewModelProvider(this, ServerViewModelFactory(serverRepository))[ServerViewModel::class.java]
+    }
+*/
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,6 +102,10 @@ class SavePaintingFragment : Fragment() {
 
         val allPics by vm.allPics.observeAsState()
         val list = allPics ?: listOf()
+
+
+        // Ktor stuffss
+
 
         LazyVerticalGrid(
             columns = GridCells.Adaptive(128.dp),
@@ -112,7 +133,7 @@ class SavePaintingFragment : Fragment() {
 
                     Card(
                         onClick = {
-                           // navigateToDrawFragment(list[index].filename, bmp_Copy)
+                            // navigateToDrawFragment(list[index].filename, bmp_Copy)
                             Log.d("filename", list[index].filename)
                         },
                         backgroundColor = Color.LightGray,
@@ -140,17 +161,21 @@ class SavePaintingFragment : Fragment() {
 
                             OutlinedButton(onClick = {
 
+                                // /data/data/com.example.customviewdemo/files/319000ce-a644-472d-b152-57cbe9030cbb
+
                                 //get bitmap
 
                                 //convert bitmap to a file
-                                saveImage(bitmap, list[index].filename+".png")
+                                saveImage(bitmap, list[index].filename + ".png")
 
+                                val filepath: String =
+                                    context.filesDir.toString() + "/" + list[index].filename + ".png"
 
-                                val filepath:String = context.filesDir.toString() + "/" + list[index].filename+".png"
+                                // TODO share the filepath on the server
                                 startFileShareIntent(filepath)
 
 
-                                 }) {
+                            }) {
                                 Text("Share")
                             }
 
@@ -218,7 +243,8 @@ class SavePaintingFragment : Fragment() {
 
     fun startFileShareIntent(filePath: String) { // pass the file path where the actual file is located.
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "*/*"  // "*/*" will accepts all types of files, if you want specific then change it on your need.
+            type =
+                "*/*"  // "*/*" will accepts all types of files, if you want specific then change it on your need.
             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             putExtra(
                 Intent.EXTRA_SUBJECT,
