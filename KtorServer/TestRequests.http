@@ -1,0 +1,25 @@
+###
+GET http://127.0.0.1:8080/paint
+
+###
+POST  http://127.0.0.1:8080/paint/create
+Content-Type: application/json
+
+{
+  "userID" : "10",
+  "imagePath" : "file:/Users/gloriadukuzeyesu/Downloads/cat.jpeg",
+  "title" : "Cute cat"
+}
+
+### Get the image object with the specified ID
+GET http://127.0.0.1:8080/paint/paintId?paintId=1
+
+### Get images created by this user
+GET http://127.0.0.1:8080/paint/userId?userID=10
+Accept: application/json
+
+
+
+
+
+
