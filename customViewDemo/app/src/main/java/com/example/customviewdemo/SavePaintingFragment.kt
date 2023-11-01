@@ -53,6 +53,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.customviewdemo.network.ServerApplication
 import com.example.customviewdemo.network.ServerRepository
 import com.example.customviewdemo.network.ServerViewModel
 import com.example.customviewdemo.network.ServerViewModelFactory
@@ -64,21 +65,12 @@ import java.io.File
 import com.example.customviewdemo.network.ServerService
 
 
-
 class SavePaintingFragment : Fragment() {
 
     val vm: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
 
     // TODO declare a serverViewModel and work on sending  images to the server
-/*
-
-    private val serverRepository: ServerRepository = ServerRepository(coroutineScope, ServerService)
-
-    private val serverViewModel: ServerViewModel by lazy {
-        ViewModelProvider(this, ServerViewModelFactory(serverRepository))[ServerViewModel::class.java]
-    }
-*/
-
+    val serverViewModel: ServerViewModel by activityViewModels { ServerViewModelFactory( (requireActivity().application as ServerApplication).serverRepository) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -263,6 +255,7 @@ class SavePaintingFragment : Fragment() {
         startActivity(shareIntent)
     }
 }
+
 
 
 

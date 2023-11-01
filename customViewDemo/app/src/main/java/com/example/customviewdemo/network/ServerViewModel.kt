@@ -9,7 +9,10 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.customviewdemo.PaintingRepository
+import com.example.customviewdemo.PaintingViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -82,3 +85,17 @@ class ServerViewModel(val repository: ServerRepository) : ViewModel() {
     }
 
 }
+
+
+
+
+class ServerViewModelFactory(private val repository: ServerRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ServerViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ServerViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+

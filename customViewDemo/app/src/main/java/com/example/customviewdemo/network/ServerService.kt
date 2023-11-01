@@ -35,6 +35,7 @@ data class PaintPost(
 
 
 class ServerService {
+
     private val URL_BASE = "http://10.0.2.2:8080"
 
     // Create an instance of the Ktor HTTP client
