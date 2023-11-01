@@ -37,8 +37,11 @@ class ClickFragment : Fragment() {
         binding.signOutButtonId.setOnClickListener {
             Firebase.auth.signOut()
             findNavController().navigate(R.id.loginFragment)
-
         }
+        binding.savedToKtor.setOnClickListener{
+            findNavController().navigate(R.id.action_clickFragment_to_saveToKtorFragment)
+        }
+
         return binding.root
     }
 

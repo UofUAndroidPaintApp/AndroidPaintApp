@@ -25,12 +25,12 @@ class ServerRepository(val scope: CoroutineScope, val serverService: ServerServi
 
 
     // Post a new paint to the server
-    suspend fun postNewPaint(userID: String, imagePath: String) {
-        serverService.postNewPaint(
-            PaintPost(
-                userID, paintTitle.value ?: "Untitled", imagePath
-            )
-        )
+    suspend fun postNewPaint(file: String, imagePath: String) {
+//        serverService.postNewPaint(
+//            PaintPost(
+//                userID, paintTitle.value ?: "Untitled", imagePath
+//            )
+//        )
         Log.d("ServerRepository", "postNewPaint: ${paintTitle.value ?: "Untitled"}")
     }
 

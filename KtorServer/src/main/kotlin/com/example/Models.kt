@@ -6,7 +6,6 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 object PaintTable : IntIdTable() {
     val userID = varchar("userID", 255)
     val imagePath = varchar("imagePath", 255)
-    val title = varchar("title", 255)
     val timeStamp = long("timeStamp")
 }
 

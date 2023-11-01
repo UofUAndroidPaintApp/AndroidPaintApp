@@ -29,3 +29,8 @@ data class PaintingData(
     var id: Int = 0 // integer primary key for the DB
 }
 
+data class receivedData (var userID: String, var imagePath: String, var createTime: Long) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}
+
