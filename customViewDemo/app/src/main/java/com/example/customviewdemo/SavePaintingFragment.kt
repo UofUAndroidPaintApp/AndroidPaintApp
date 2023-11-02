@@ -235,7 +235,8 @@ class SavePaintingFragment : Fragment() {
 
 
                                      }) {
-                                    Text(text = "Share to Server")
+                                    //Text(text="Server", fontsize=10.sp)
+                                    Text(text = "Upload", fontSize = 10.sp)
 
                                 }
 
@@ -289,11 +290,11 @@ class SavePaintingFragment : Fragment() {
             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             putExtra(
                 Intent.EXTRA_SUBJECT,
-                "Sharing file from the AppName"
+                "Beautiful art I made"
             )
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Sharing file from the AppName with some description"
+                "Check it out"
             )
             val fileURI = FileProvider.getUriForFile(
                 requireContext(), requireContext().packageName + ".provider",
