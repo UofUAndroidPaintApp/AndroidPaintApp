@@ -15,7 +15,7 @@
         android:layout_height="79dp"
         android:layout_marginTop="55dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="@string/let_s_paint"
+        android:text="Lets Paint!"
         android:textColor="@color/orange"
         android:textSize="55sp"
         android:textStyle="italic|bold"
@@ -56,14 +56,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="60dp"
-        android:layout_marginLeft="145dp"
+
         android:backgroundTint="@color/orange"
-        android:text="Save To Ktor"
+        android:text="Saved To Ktor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.915"
         app:layout_constraintStart_toStartOf="parent"
         />
+<!--    android:layout_marginLeft="145dp"-->
+
 
     <Button
         android:id="@+id/signOutButtonId"

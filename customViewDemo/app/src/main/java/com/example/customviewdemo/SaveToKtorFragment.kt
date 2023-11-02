@@ -102,8 +102,6 @@ class SaveToKtorFragment : Fragment() {
     @Composable
     fun SavePaintingCompose(vm: PaintingViewModel, context: Context) {
 
-
-
         val editIcon = painterResource(id = R.drawable.ic_launcher_edit)
         val deleteIcon: Painter = painterResource(id = R.drawable.ic_launcher_delete_icon)
 
