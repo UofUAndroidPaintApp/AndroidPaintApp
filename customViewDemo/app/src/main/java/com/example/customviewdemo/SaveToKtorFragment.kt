@@ -69,6 +69,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.util.toByteArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -110,37 +111,48 @@ class SaveToKtorFragment : Fragment() {
         val list = allPics ?: listOf()
         val client = HttpClient()
 
-        var pics by remember {mutableStateOf<Array<receivedData>?>(null)}
-
-
+//        var pics by remember {mutableStateOf<Array<receivedData>?>(null)}
+        var test = emptyArray<receivedData>()
+        var allPicsTest: MutableList<receivedData> = test.toMutableList()
         //todo change runblocking to the other thing
         runBlocking {
             val httpResponse: String = client.get("http://10.0.2.2:8080/paint").bodyAsText()
             val gson = Gson()
             val drawingDataList = gson.fromJson(httpResponse, Array<receivedData>::class.java)
+
+            allPicsTest = drawingDataList.toMutableList()
+            var allPaintFiles = emptyArray<File>().toMutableList()
+
 //            Log.i("saveToKTor", gson.toJson(drawingDataList[0]))
-//            Log.i("saveToKtor", "size is..." + drawingDataList.size.toString())
+            Log.i("saveToKtor", "size is..." + allPicsTest.size.toString())
+            Log.i("saveToKtor", "size is..." + drawingDataList.size.toString())
 
-            pics = drawingDataList
+            //get each of the pics and store then in SQLlite DB
+            for (pic in allPicsTest!!){
+                val file = File.createTempFile("files", "index")
 
+//                runBlocking {
+//                    val response = client.get("http://10.0.2.2:8080/paint/${pic.imagePath}")
+//                    {
+//                        onDownload { bytesSentTotal, contentLength ->
+//                            println("Received $bytesSentTotal bytes from $contentLength")
+//                        }
+//                    }
+//                    val responseBody: ByteArray = httpResponse.body()
+//                    file.writeBytes(responseBody)
+//                    println("A file saved to ${file.path}")
+//                }
+                //Call the thing we made
+                val response = client.get("http://10.0.2.2:8080/paint/${pic.imagePath}")
+//                allPaintFiles.add(response)
 
-
-//            for (thing in drawingDataList) {
-//                Log.i("savetoKtorThing", "thing is..."+thing.imagePath)
-//
-//            }
-
-
-//            for (gson.toJson(drawingDataList.size))
-
-        }
-
-        for (thing in pics!!){
-            lifecycleScope.launch {
-                val bitmap = client.get("http://10.0.2.2:8080/paint/" + thing.imagePath + "/getImage")
             }
-
-            Log.i("savetoKtorThing", "thing is..."+thing.imagePath)
+//            pics = drawingDataList
+////            for (thing in pics!!){
+//            lifecycleScope.launch {
+//                val bitmap = client.get("http://10.0.2.2:8080/paint/${pics.get(0)}/getImage")
+//                Log.i("savetoKtorThing", "thing is..."+thing.imagePath)
+////                }
         }
 
 

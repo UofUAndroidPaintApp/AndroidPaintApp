@@ -4,12 +4,14 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.resources.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.partialcontent.*
 import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.resources.Resources
 import io.ktor.server.resources.post
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.selectAll
@@ -23,6 +25,7 @@ import java.time.Instant
 
 fun Application.configureResources() {
     install(Resources)
+    install(PartialContent)
     routing {
 
         // GET - get all images sorted desc by the time created.
@@ -64,7 +67,7 @@ fun Application.configureResources() {
                 part.dispose()
             }
 
-            newSuspendedTransaction (Dispatchers.IO, DBSettings.db ) {
+            newSuspendedTransaction(Dispatchers.IO, DBSettings.db) {
                 PaintTable.insert {
                     it[userID] = "test"
                     it[imagePath] = fileName
@@ -136,26 +139,16 @@ fun Application.configureResources() {
         }
 
         get<Paints.GetImage> {
-//            val fileName = call.receive<ImageRequestData>()
 
-
-
-
-            call.respond("fileName is..${it.fileName}")
-
-//
-            try {
-                val file = File("./src/main/resources/test.png")
-            } catch (e: Exception) {
-                call.respond(e.printStackTrace())
+            var file = File("src/main/resources/" + it.fileName)
+            if (file.exists()) {
+                call.respondFile(file)
+            }
+            else {
+                call.respond("couldn't handle the heavy load of the file")
             }
 
-            call.respond("made it after try catch")
-
-//
-
         }
-
     }
 }
 
@@ -166,13 +159,18 @@ data class ImageDataObject(
     val userID: String,
     val paintId: Int,
     val imagePath: String,
-    val createTime: Long
+    val createTime: Long,
+)
+
+data class ImageOutputObject(
+    val file: File
 )
 
 
 // ImageDAt for PUT
 @Serializable
 data class ImageData(val userID: String, val imagePath: String)
+
 @Serializable
 data class ImageRequestData(val fileName: String)
 
@@ -190,7 +188,7 @@ class Paints {
     @Resource("delete")
     class Delete(val parent: Paints = Paints(), val paintId: Int)
 
-    @Resource("{fileName}/getImage")
+    @Resource("/{fileName}/getImage")
     class GetImage(val parent: Paints = Paints(), val fileName: String)
 }
 

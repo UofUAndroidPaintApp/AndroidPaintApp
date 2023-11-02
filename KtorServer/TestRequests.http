@@ -23,4 +23,4 @@ Accept: application/json
 DELETE http://127.0.0.1:8080/paint/delete?paintId=3
 
 ###
-GET  http://127.0.0.1:8080/paint/test.png/getImage
+GET  http://127.0.0.1:8080/paint/d1e37cbe-4e0e-468c-8276-c0254665b865.png/getImage
