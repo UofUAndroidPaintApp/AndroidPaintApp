@@ -62,5 +62,9 @@
         android:id="@+id/saveToKtorFragment"
         android:name="com.example.customviewdemo.SaveToKtorFragment"
         android:label="fragment_save_to_ktor"
-        tools:layout="@layout/fragment_save_to_ktor" />
+        tools:layout="@layout/fragment_save_to_ktor" >
+        <action
+            android:id="@+id/action_saveToKtorFragment_to_drawFragment"
+            app:destination="@id/drawFragment" />
+    </fragment>
 </navigation>

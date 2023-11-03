@@ -67,22 +67,28 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.readBytes
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.http.isSuccess
 import io.ktor.util.toByteArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 import java.io.ByteArrayOutputStream
 import java.io.File
+
+@Serializable
+data class SharedBitmapData(val bitmap: String, val userID: String)
 
 class SaveToKtorFragment : Fragment() {
 
     val vm: PaintingViewModel by activityViewModels { PaintingViewModelFactory((requireActivity().application as PaintingApplication).paintingRepository) }
 
-    // TODO declare a serverViewModel and work on sending  images to the server
-    val serverViewModel: ServerViewModel by activityViewModels { ServerViewModelFactory( (requireActivity().application as ServerApplication).serverRepository) }
+    //Declare a serverViewModel and work on sending  images to the server
+    val serverViewModel: ServerViewModel by activityViewModels { ServerViewModelFactory((requireActivity().application as ServerApplication).serverRepository) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,59 +107,51 @@ class SaveToKtorFragment : Fragment() {
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun SavePaintingCompose(vm: PaintingViewModel, context: Context) {
-
         val editIcon = painterResource(id = R.drawable.ic_launcher_edit)
         val deleteIcon: Painter = painterResource(id = R.drawable.ic_launcher_delete_icon)
-
         val allPics by vm.allPics.observeAsState()
         val list = allPics ?: listOf()
         val client = HttpClient()
 
-//        var pics by remember {mutableStateOf<Array<receivedData>?>(null)}
+        //var pics by remember {mutableStateOf<Array<receivedData>?>(null)}
         var test = emptyArray<receivedData>()
-        var allPicsTest: MutableList<receivedData> = test.toMutableList()
+        var allPaths by remember { mutableStateOf<List<String>>(emptyList()) }
+        var bitmaps = mutableListOf<Bitmap>()
+        //var bitmaps = arrayOf<Bitmap>()
         //todo change runblocking to the other thing
         runBlocking {
+
             val httpResponse: String = client.get("http://10.0.2.2:8080/paint").bodyAsText()
             val gson = Gson()
             val drawingDataList = gson.fromJson(httpResponse, Array<receivedData>::class.java)
-
-            allPicsTest = drawingDataList.toMutableList()
             var allPaintFiles = emptyArray<File>().toMutableList()
-
-//            Log.i("saveToKTor", gson.toJson(drawingDataList[0]))
-            Log.i("saveToKtor", "size is..." + allPicsTest.size.toString())
-            Log.i("saveToKtor", "size is..." + drawingDataList.size.toString())
-
-            //get each of the pics and store then in SQLlite DB
-            for (pic in allPicsTest!!){
-                val file = File.createTempFile("files", "index")
-
-//                runBlocking {
-//                    val response = client.get("http://10.0.2.2:8080/paint/${pic.imagePath}")
-//                    {
-//                        onDownload { bytesSentTotal, contentLength ->
-//                            println("Received $bytesSentTotal bytes from $contentLength")
-//                        }
-//                    }
-//                    val responseBody: ByteArray = httpResponse.body()
-//                    file.writeBytes(responseBody)
-//                    println("A file saved to ${file.path}")
-//                }
-                //Call the thing we made
-                val response = client.get("http://10.0.2.2:8080/paint/${pic.imagePath}")
-//                allPaintFiles.add(response)
-
-            }
-//            pics = drawingDataList
-////            for (thing in pics!!){
-//            lifecycleScope.launch {
-//                val bitmap = client.get("http://10.0.2.2:8080/paint/${pics.get(0)}/getImage")
-//                Log.i("savetoKtorThing", "thing is..."+thing.imagePath)
-////                }
+            //Log.i("saveToKTor", gson.toJson(drawingDataList[0]))
         }
 
+        lifecycleScope.launch {
+            //Get all the filenames for paintings stored in server
+            val allEntries = vm.getKtorFiles()
+            //Go through each filename and actually request the file
+            for (entry in allEntries) {
+                val path = entry["bitmap"]
+                val client = HttpClient(CIO)
+                val response: HttpResponse =
+                    client.get("http://10.0.2.2:8080/paint/" + path + "/getImage")
+                if (response.status.isSuccess()) {
+                    val bytes = response.readBytes()
+                    val bitmapResponse = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    bitmaps.add(bitmapResponse)
+                    Log.i("bitmaps", bitmaps.size.toString())
+                        // bitmaps.add(bitmapResponse.copy(Bitmap.Config.ARGB_8888, true))
+                    Log.i("succeed?", "inside success")
+                } else {
+                    Log.i("succeed?", "DIDN'T SUCCEED")
+                }
 
+            }
+            client.close()
+        }
+        //Log.i("bitmaps", bitmaps.size.toString())
         LazyVerticalGrid(
             columns = GridCells.Adaptive(128.dp),
             // content padding
@@ -163,20 +161,11 @@ class SaveToKtorFragment : Fragment() {
                 end = 12.dp,
                 bottom = 16.dp
             ),
-            content = {
-                items(list.size) { index ->
-                    val file = File(context?.filesDir, list[index].filename).readBytes()
-                    val bitmap = BitmapFactory.decodeByteArray(file, 0, file.size)
-                    val bmp_Copy: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-                    val imageBitmap = bitmap.asImageBitmap()
-                    val cardmodifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
-                        .clickable {
-                            //This is where we'd add listener to open saved painting
-                            //findNavController().navigate(R.id.action_savePaintingFragment_to_drawFragment)
-                        }
+            content =
+            {
+                items(bitmaps.size) { index ->
+                    val imageBitmap = bitmaps[index]
+
 
                     Card(
                         onClick = {
@@ -191,7 +180,7 @@ class SaveToKtorFragment : Fragment() {
                     ) {
                         Column {
                             Image(
-                                bitmap = imageBitmap,
+                                bitmap = imageBitmap.asImageBitmap(),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(150.dp)
@@ -213,7 +202,6 @@ class SaveToKtorFragment : Fragment() {
                                 //get bitmap
 
                                 //convert bitmap to a file
-                                saveImage(bitmap, list[index].filename + ".png")
 
                                 val filepath: String =
                                     context.filesDir.toString() + "/" + list[index].filename + ".png"
@@ -235,7 +223,6 @@ class SaveToKtorFragment : Fragment() {
 
                                 IconButton(
                                     onClick = {
-                                        navigateToDrawFragment(list[index].filename, bmp_Copy)
                                     },
                                     modifier = Modifier.size(24.dp)
                                 ) {
@@ -248,30 +235,38 @@ class SaveToKtorFragment : Fragment() {
                                 Button(onClick = {
                                     val client = HttpClient(CIO)
 
-                                    saveImage(bitmap, list[index].filename + ".png")
-
 
                                     val filepath: String =
                                         context.filesDir.toString() + "/" + list[index].filename + ".png"
 
                                     lifecycleScope.launch {
                                         Log.i("serverPost", "inside post button clickable")
-                                        val response: HttpResponse = client.post("http://10.0.2.2:8080/paint/create") {
-                                            setBody(
-                                                MultiPartFormDataContent(
-                                                    formData {
-                                                        append("image", File(filepath).readBytes(), Headers.build {
-                                                            append(HttpHeaders.ContentType, "image/png")
-                                                            append(HttpHeaders.ContentDisposition, "filename=" + list[index].filename+".png")
-                                                        })
-                                                    },
-                                                    boundary = "WebAppBoundary"
+                                        val response: HttpResponse =
+                                            client.post("http://10.0.2.2:8080/paint/create") {
+                                                setBody(
+                                                    MultiPartFormDataContent(
+                                                        formData {
+                                                            append(
+                                                                "image",
+                                                                File(filepath).readBytes(),
+                                                                Headers.build {
+                                                                    append(
+                                                                        HttpHeaders.ContentType,
+                                                                        "image/png"
+                                                                    )
+                                                                    append(
+                                                                        HttpHeaders.ContentDisposition,
+                                                                        "filename=" + list[index].filename + ".png"
+                                                                    )
+                                                                })
+                                                        },
+                                                        boundary = "WebAppBoundary"
+                                                    )
                                                 )
-                                            )
-                                            onUpload { bytesSentTotal, contentLength ->
-                                                println("Sent $bytesSentTotal bytes from $contentLength")
+                                                onUpload { bytesSentTotal, contentLength ->
+                                                    println("Sent $bytesSentTotal bytes from $contentLength")
+                                                }
                                             }
-                                        }
                                     }
                                     Log.i("serverPost", "we're AFTER?? the posting maybe it worked")
 
@@ -292,7 +287,6 @@ class SaveToKtorFragment : Fragment() {
                                         contentDescription = "Delete Icon"
                                     )
                                 }
-
                             }
                         }
                     }
@@ -301,28 +295,16 @@ class SaveToKtorFragment : Fragment() {
         )
     }
 
-    fun navigateToDrawFragment(filename: String, bitmap: Bitmap) {
-        Log.e("Button", "mu button thing works")
-        val drawFragment = DrawFragment()
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentContainerViewID, drawFragment, "load_tag")
-        transaction.addToBackStack(null)
-        vm.loadPainting(bitmap, filename)
-        transaction.commit()
-    }
+//    fun navigateToDrawFragment(filename: String, bitmap: Bitmap) {
+//        Log.e("Button", "mu button thing works")
+//        val drawFragment = DrawFragment()
+//        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+//        transaction.replace(R.id.fragmentContainerViewID, drawFragment, "load_tag")
+//        transaction.addToBackStack(null)
+//        vm.loadPainting(bitmap, filename)
+//        transaction.commit()
+//    }
 
-    fun saveImage(bitmap: Bitmap, fileName: String) {
-        lifecycleScope.launch {
-            val bos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
-            context?.openFileOutput(fileName, Context.MODE_PRIVATE).use {
-                it?.write(bos.toByteArray())
-            }
-            withContext(Dispatchers.IO) {
-                bos.close()
-            }
-        }
-    }
 
     fun startFileShareIntent(filePath: String) { // pass the file path where the actual file is located.
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -345,4 +327,5 @@ class SaveToKtorFragment : Fragment() {
         }
         startActivity(shareIntent)
     }
+
 }

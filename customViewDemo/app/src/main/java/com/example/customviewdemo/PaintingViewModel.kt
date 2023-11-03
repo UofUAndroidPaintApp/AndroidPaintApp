@@ -8,7 +8,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 class PaintingViewModel (private val repository: PaintingRepository) : ViewModel() {
 
     private val _bitmap: MutableLiveData<Bitmap??> = MutableLiveData(Bitmap.createBitmap(1440, 2990, Bitmap.Config.ARGB_8888))
@@ -47,6 +56,28 @@ class PaintingViewModel (private val repository: PaintingRepository) : ViewModel
             repository.removePainting(filename)
         }
     }
+
+    suspend fun getKtorFiles(): List<Map<String, String>> {
+        Log.i("getKtorFiles", "inside getKtorFiles")
+        val client = HttpClient(CIO)
+
+        val httpResponse: HttpResponse = client.get("http://10.0.2.2:8080/paint")
+        val response = httpResponse.bodyAsText()
+        val jsons = Json.parseToJsonElement(response).jsonArray
+
+//        Log.i("jsons", jsons.toString())
+
+        val result = jsons.map { jsonObject ->
+            val bitmap = jsonObject.jsonObject["imagePath"]?.jsonPrimitive?.content ?: ""
+            val userId = jsonObject.jsonObject["UserId"]?.jsonPrimitive?.content ?: ""
+            mapOf("bitmap" to bitmap, "userId" to userId)
+        }
+        client.close()
+
+        Log.i("jsons", result.toString())
+
+        return result
+    }
 }
 
 // This factory class allows us to define custom constructors for the view model
@@ -59,3 +90,11 @@ class PaintingViewModelFactory(private val repository: PaintingRepository) : Vie
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
+
+
+
+
+
+
+
